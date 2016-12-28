@@ -21,8 +21,8 @@ abstract class Producto{
     public Producto(String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion){
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precioVenta = pVenta;
-        this.precioCompra = pCompra;
+        this.precioVenta = (pVenta >=0)? pVenta:0;
+        this.precioCompra = (pCompra >= 0)? pCompra:0;
         this.instalacion = instalacion;
     }
     
@@ -35,8 +35,8 @@ abstract class Producto{
     public void modificar (String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion){
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precioVenta = pVenta;
-        this.precioCompra = pCompra;
+        this.precioVenta = (pVenta >=0)? pVenta:0;
+        this.precioCompra = (pCompra >= 0)? pCompra:0;
         this.instalacion = instalacion;
     }
  

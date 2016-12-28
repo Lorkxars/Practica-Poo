@@ -10,31 +10,36 @@ package Codigo;
  * @author david
  */
 public class Pieza_Aluminio extends Producto{
-    private double altura;
-    private double anchura;
+    private int altura;
+    private int anchura;
     
-    public Pieza_Aluminio(String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion, double altura, double anchura){
+    public Pieza_Aluminio(String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion, int altura, int anchura){
         super(nombre, descripcion, pCompra, pVenta, instalacion);
-        this.altura = altura;
-        this.anchura = anchura;
+        this.altura = (altura >= 0)? altura: 0;
+        this.anchura = (anchura >=0)? anchura:0 ;
     }
     
     @Override
     public double calculoPrecioVenta(){
-        return this.getPrecioVenta();
+        if (this.isInstalacion()){
+            return this.getPrecioVenta() + 20; //Instalación 20 pavos porque me apetece
+        }
+        else{
+            return this.getPrecioVenta();
+        }    
     }
     
-    public void modificar (String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion, double altura, double anchura){
+    public void modificar (String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion, int altura, int anchura){
         this.modificar(nombre, descripcion, pCompra, pVenta, instalacion);
-        this.altura = altura;
-        this.anchura = anchura;
+        this.altura = (altura >= 0)? altura: 0;
+        this.anchura = (anchura >=0)? anchura:0 ;
     }
 
-    public double getAltura() {
+    public int getAltura() {
         return altura;
     }
 
-    public double getAnchura() {
+    public int getAnchura() {
         return anchura;
     }
      
