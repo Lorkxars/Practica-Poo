@@ -18,12 +18,51 @@ abstract class Producto{
     private double precioCompra;
     private boolean instalacion;
     
+    public Producto(String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion){
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precioVenta = pVenta;
+        this.precioCompra = pCompra;
+        this.instalacion = instalacion;
+    }
+    
     abstract double calculoPrecioVenta(); 
     
-    abstract void alta();
+    //Alta y baja es crear y eliminar una instancia,
+    //modificar implementamos una base que hay que sobreescribir
+    //y completar en cada caso
     
-    abstract void baja();
+    public void modificar (String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion){
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precioVenta = pVenta;
+        this.precioCompra = pCompra;
+        this.instalacion = instalacion;
+    }
+ 
     
-    abstract void modificacion ();
+    
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public double getPrecioVenta() {
+        return precioVenta;
+    }
+
+    public double getPrecioCompra() {
+        return precioCompra;
+    }
+
+    public boolean isInstalacion() {
+        return instalacion;
+    }
+    
+    
     
 }
