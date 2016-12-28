@@ -29,6 +29,11 @@ public class Pieza_Aluminio extends Producto{
         }    
     }
     
+    @Override
+    public double calculoBeneficio(){
+        return this.calculoPrecioVenta() - this.getPrecioCompra();
+    }
+    
     public void modificar (String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion, int altura, int anchura){
         this.modificar(nombre, descripcion, pCompra, pVenta, instalacion);
         this.altura = (altura >= 0)? altura: 0;

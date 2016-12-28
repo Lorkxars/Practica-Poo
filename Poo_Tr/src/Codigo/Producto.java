@@ -26,6 +26,8 @@ abstract class Producto{
         this.instalacion = instalacion;
     }
     
+    abstract double calculoBeneficio();
+    
     abstract double calculoPrecioVenta(); 
     
     //Alta y baja es crear y eliminar una instancia,

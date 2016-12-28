@@ -64,6 +64,11 @@ public class Ventanas extends Producto {
        return aux;
    }
     
+    @Override
+    public double calculoBeneficio(){
+        return this.calculoPrecioVenta() - this.getPrecioCompra();
+    }
+    
     public void modificar (String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion, int altura, int anchura, int nhojas, boolean personalizado){
         super.modificar(nombre, descripcion, pCompra, pVenta, instalacion);
         this.nhojas = nhojas;
