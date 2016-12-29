@@ -42,7 +42,10 @@ abstract class Producto{
         this.instalacion = instalacion;
     }
  
-    
+    //Metodo auxiliar para implementar los equals de las clases hijas
+    protected boolean parecidos (String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion){
+        return (this.nombre == nombre && this.descripcion == descripcion && this.precioCompra == pCompra && this.precioVenta == pVenta && this.instalacion == instalacion);
+    }
     
 
     public String getNombre() {

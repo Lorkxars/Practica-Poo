@@ -102,6 +102,10 @@ public class Rejas extends Producto{
             }
         }
     }
+     
+     public boolean equals(Rejas p){
+        return ((this.altura== p.altura && this.anchura == p.anchura && this.nbarrotes == p.nbarrotes && this.personalizado == p.personalizado)&& (this.parecidos(p.getNombre(), p.getDescripcion(), p.getPrecioCompra(), p.getPrecioVenta(), p.isInstalacion())));
+    }
 
     public int getNbarrotes() {
         return nbarrotes;

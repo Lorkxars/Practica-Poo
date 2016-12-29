@@ -102,6 +102,10 @@ public class Ventanas extends Producto {
             }
         }
     }
+    
+    public boolean equals(Ventanas p){
+        return ((this.altura== p.altura && this.anchura == p.anchura && this.nhojas == p.nhojas && this.personalizado == p.personalizado)&& (this.parecidos(p.getNombre(), p.getDescripcion(), p.getPrecioCompra(), p.getPrecioVenta(), p.isInstalacion())));
+    }
 
     public int getNhojas() {
         return nhojas;

@@ -29,6 +29,10 @@ public class Pieza_Aluminio extends Producto{
         }    
     }
     
+    public boolean equals(Pieza_Aluminio p){
+        return ((this.altura== p.altura && this.anchura == p.anchura)&& (this.parecidos(p.getNombre(), p.getDescripcion(), p.getPrecioCompra(), p.getPrecioVenta(), p.isInstalacion())));
+    }
+    
     @Override
     public double calculoBeneficio(){
         return this.calculoPrecioVenta() - this.getPrecioCompra();
