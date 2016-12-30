@@ -24,14 +24,16 @@ public class Catalogo {
     public void eliminar (Producto p){
         catalogo.remove(p);
     }
-    public Producto buscarNombre(String nombre){
+    public Producto buscarNombre(String nombre) throws NoEncontradoExcp{
         boolean aux = false;
         int i = 0;
         while (i<catalogo.size() && !aux){
-            aux = (catalogo.get(i).getNombre() == nombre);
+            aux = (catalogo.get(i).getNombre().equalsIgnoreCase(nombre));
             i = i +1;
         }
-        //crear excepcion y si aux igual a false lanzarla y tratarla diciendo que ese objeto no esta
+        if (!aux){
+            throw new NoEncontradoExcp("El objeto buscado no se encuentra en el catalogo");
+        }
         return catalogo.get(i-1);
     }
 }
