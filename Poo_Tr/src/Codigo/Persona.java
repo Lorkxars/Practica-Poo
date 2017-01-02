@@ -22,7 +22,13 @@ public class Persona {
       this.usuario = usuario;
       this.password = password.hashCode();
     }
-    //de momento no vamos a implementar ninguna forma de modificar usuarios
+    
+    public void modificar(String nombre, String apellidos, String usuario,String password){
+      this.nombre = nombre;
+      this.apellidos = apellidos;
+      this.usuario = usuario;
+      this.password = password.hashCode();
+    }
 
     public String getNombre() {
         return nombre;

@@ -21,4 +21,9 @@ public class Trabajador extends Persona{
         return sueldo;
     }
     
+    public void modificar(String nombre, String apellidos, String usuario,String password, double sueldo){
+        this.modificar(nombre, apellidos, usuario, password);
+        this.sueldo = sueldo;
+    }
+    
 }
