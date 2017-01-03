@@ -9,7 +9,7 @@ package Codigo;
  *
  * @author david
  */
-abstract class Producto{
+abstract class Producto implements Comparable <Producto>{
     
     //que alguien se prepare el javadoc que yo no me acuerdo XD
     private String nombre;
@@ -47,6 +47,17 @@ abstract class Producto{
         return (this.nombre == nombre && this.descripcion == descripcion && this.precioCompra == pCompra && this.precioVenta == pVenta && this.instalacion == instalacion);
     }
     
+    @Override
+    public int compareTo(Producto p){
+        double alpha = 0.00001; //Para comparar decimales hay que poner un margen de error
+        if (this.calculoPrecioVenta() < (p.calculoPrecioVenta () - alpha)){
+            return -1;
+        }
+        else if (this.calculoPrecioVenta() > (p.calculoPrecioVenta() + alpha)){
+            return 1;
+        }
+        else return 0;
+    }
 
     public String getNombre() {
         return nombre;

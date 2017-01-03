@@ -5,11 +5,13 @@
  */
 package Codigo;
 
+import java.util.Collections;
+
 /**
  *
  * @author david
  */
-public class Franquicia {
+public class Franquicia implements Comparable <Franquicia>{
     private String nombre;
     private String horaApertura;
     private String horaCierre;
@@ -87,4 +89,18 @@ public class Franquicia {
     public Catalogo getCatalogo() {
         return catalogo;
     }
+    
+    //Devuelve el catalogo ordenado por precio de los productos
+    public Catalogo getCatalogoOrd(){
+        Catalogo aux = this.getCatalogo(); //Sacas el catalogo de la franquicia
+        Collections.sort(aux.getCatalogo());//Sacas la lista catalogo de la clase catalogo y la ordenas
+        return aux;
+        
+    }
+    
+    @Override
+    public int compareTo(Franquicia f){
+        return nombre.compareTo(f.nombre);
+    }
+    
 }

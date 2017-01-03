@@ -42,4 +42,8 @@ public class Catalogo {
     public int size(){
         return catalogo.size();
     }
+
+    public ArrayList<Producto> getCatalogo() {
+        return catalogo;
+    }
 }

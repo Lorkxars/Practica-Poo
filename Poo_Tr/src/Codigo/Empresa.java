@@ -6,6 +6,7 @@
 package Codigo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -46,11 +47,40 @@ public class Empresa {
         }
         return franquicias.get(i-1);
     }
-    //Devuelve el catalogo por ordenes de inserccion, hay que hacer otros 2 que cada uno lo ordene de una forma
+    //Devuelve el catalogo por ordenes de inserccion
     public Catalogo superCatalogo(){
         Catalogo aux = new Catalogo();
         for(int i=0; i < franquicias.size(); i++){
             Franquicia faux = franquicias.get(i);
+            for(int j=0; j < faux.getCatalogo().size(); j++){
+                Producto p = faux.getCatalogo().getProducto(j);
+                aux.anadirProducto(p);
+            }
+        }
+        return aux;
+    }
+    
+    //Ordenado por precio de los productos (En teoria al menos)
+    public Catalogo superCatalogoP(){
+        Catalogo aux = new Catalogo();
+        for(int i=0; i < franquicias.size(); i++){
+            Franquicia faux = franquicias.get(i);
+            for(int j=0; j < faux.getCatalogo().size(); j++){
+                Producto p = faux.getCatalogo().getProducto(j);
+                aux.anadirProducto(p);
+            }
+        }
+        Collections.sort(aux.getCatalogo());
+        return aux;
+    }
+    
+    //Y ordenado por el nombre de la franquicia a la que pertenecen
+    public Catalogo superCatalogoN(){
+         Catalogo aux = new Catalogo();
+         ArrayList <Franquicia> intermediario = franquicias;//Sacamos una copia de la lista de franquicias y la ordenamos
+         Collections.sort(intermediario);
+        for(int i=0; i < intermediario.size(); i++){
+            Franquicia faux = intermediario.get(i);
             for(int j=0; j < faux.getCatalogo().size(); j++){
                 Producto p = faux.getCatalogo().getProducto(j);
                 aux.anadirProducto(p);
