@@ -41,6 +41,7 @@ public class Franquicia {
     public void ventaProducto(Producto p){  
         beneficio += p.calculoBeneficio();
         ventasTotales += p.calculoPrecioVenta();
+        nProdVendidos = nProdVendidos +1;
         catalogo.eliminar(p);
     }
     
@@ -49,6 +50,10 @@ public class Franquicia {
         this.horaApertura = horaApertura;
         this.horaCierre = horaCierre;
         this.direccion = direccion;
+    }
+    
+    public boolean equals(Franquicia f){
+        return (beneficio == f.getBeneficio() && nombre == f.getNombre() && horaApertura == f.getHoraApertura() && horaCierre == f.getHoraCierre() && direccion == f.getDireccion() && catalogo == f.getCatalogo() && nProdVendidos == f.getnProdVendidos() && ventasTotales == f.getVentasTotales());
     }
 
     public String getNombre() {

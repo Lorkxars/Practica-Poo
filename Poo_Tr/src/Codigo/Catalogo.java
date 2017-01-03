@@ -36,4 +36,10 @@ public class Catalogo {
         }
         return catalogo.get(i-1);
     }
+    public Producto getProducto(int i){
+        return catalogo.get(i);
+    }
+    public int size(){
+        return catalogo.size();
+    }
 }
