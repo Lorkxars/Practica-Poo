@@ -9,12 +9,14 @@ package Codigo;
  *
  * @author david
  */
-public class Trabajador extends Persona{
+public class Empleado extends Persona{
     private double sueldo;
+    private String franquicia;
     
-    public Trabajador(String nombre, String apellidos, String usuario,String password, double sueldo){
+    public Empleado(String nombre, String apellidos, String usuario,String password, double sueldo, String franquicia){
         super(nombre, apellidos, usuario, password);
         this.sueldo = sueldo;
+        this.franquicia = franquicia;
     }
 
     public double getSueldo() {
@@ -24,6 +26,15 @@ public class Trabajador extends Persona{
     public void modificar(String nombre, String apellidos, String usuario,String password, double sueldo){
         this.modificar(nombre, apellidos, usuario, password);
         this.sueldo = sueldo;
+    }
+    
+    @Override
+    public String toString(){
+        return (this.getNombre() +"    "+ this.getApellidos() +"    "+ this.getSueldo());
+    }
+
+    public String getFranquicia() {
+        return franquicia;
     }
     
 }

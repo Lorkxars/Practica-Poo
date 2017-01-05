@@ -15,14 +15,17 @@ import java.util.Collections;
 public class Empresa {
     private String nombre;
     private ArrayList <Franquicia> franquicias;
+    private Persona admin;
     
-    public Empresa (String nombre, ArrayList <Franquicia> franquicias){
+    public Empresa (String nombre, ArrayList <Franquicia> franquicias, Persona admin){
         this.franquicias =  franquicias;
         this.nombre = nombre;
+        this.admin = admin;
     }
-    public Empresa (String nombre){
+    public Empresa (String nombre, Persona admin){
         this.nombre = nombre;
         franquicias = new ArrayList <Franquicia> ();
+        this.admin = admin;
     }       
             
     public void anadirFranquicia (Franquicia f){
@@ -96,6 +99,44 @@ public class Empresa {
     public ArrayList<Franquicia> getFranquicias() {
         return franquicias;
     }
+
+    public Persona getAdmin() {
+        return admin;
+    }
+    public Dueno esDueno(String usuario, String contrasena) throws NoEncontradoExcp{//devuelve el dueno si esta y si no produce excepcion
+        int i = 0;
+        boolean encontrado = false;
+        do{
+            encontrado = (usuario.equals(this.franquicias.get(i).getDueno().getUsuario()) && (contrasena.hashCode() == this.franquicias.get(i).getDueno().getPassword()));
+            i++;
+        }while(i < this.getFranquicias().size() && !encontrado);
+        if(encontrado){
+            return this.getFranquicias().get(i-1).getDueno();
+        }
+        else{
+            throw new NoEncontradoExcp("Este usuario no pertenece a un Dueno");
+        }
+    }
+    
+    public Empleado esEmpleado(String usuario, String contrasena) throws NoEncontradoExcp{
+        int i = 0;
+        boolean encontrado = false;
+        int aux;
+        do{
+            aux = this.franquicias.get(i).esEmpleado(usuario, contrasena);
+            if(aux != -1){
+                encontrado = true;
+            }            
+            i++;
+        }while(i < this.getFranquicias().size() && !encontrado);
+        if(encontrado){
+            return this.franquicias.get(i-1).getEmpleados().get(aux);
+        }
+        else{
+            throw new NoEncontradoExcp("Este usuario no pertenece a un Empleado");
+        }
+    }
+    
     
 }
 

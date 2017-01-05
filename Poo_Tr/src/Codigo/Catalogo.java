@@ -27,7 +27,7 @@ public class Catalogo {
     public Producto buscarNombre(String nombre) throws NoEncontradoExcp{
         boolean aux = false;
         int i = 0;
-        while (i<catalogo.size() && !aux){
+        while (i< catalogo.size() && !aux){
             aux = (catalogo.get(i).getNombre().equalsIgnoreCase(nombre));
             i = i +1;
         }

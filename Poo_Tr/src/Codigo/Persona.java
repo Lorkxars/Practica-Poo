@@ -29,6 +29,10 @@ public class Persona {
       this.usuario = usuario;
       this.password = password.hashCode();
     }
+    
+    public boolean equals(Persona p){
+        return (this.nombre.equals(p.getNombre()) && this.apellidos.equals(p.getApellidos()) && this.usuario.equals(p.getUsuario()) && this.password == p.getPassword());
+    }
 
     public String getNombre() {
         return nombre;

@@ -58,6 +58,11 @@ abstract class Producto implements Comparable <Producto>{
         }
         else return 0;
     }
+    
+    @Override
+    public String toString(){
+        return nombre + "   " + this.calculoPrecioVenta();
+    }
 
     public String getNombre() {
         return nombre;

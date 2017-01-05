@@ -5,6 +5,7 @@
  */
 package Codigo;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 /**
@@ -20,8 +21,10 @@ public class Franquicia implements Comparable <Franquicia>{
     private int nProdVendidos;
     private double ventasTotales;
     private Catalogo catalogo;
+    private ArrayList <Empleado> empleados;
+    private Dueno dueno;
 
-    public Franquicia(String nombre, String horaApertura, String horaCierre, String direccion, double beneficio, int nProdVendidos, double ventasTotales, Catalogo catalogo) {
+    public Franquicia(String nombre, String horaApertura, String horaCierre, String direccion, double beneficio, int nProdVendidos, double ventasTotales, Catalogo catalogo, Dueno dueno, ArrayList <Empleado> empleados) {
         this.nombre = nombre;
         this.horaApertura = horaApertura;
         this.horaCierre = horaCierre;
@@ -30,14 +33,18 @@ public class Franquicia implements Comparable <Franquicia>{
         this.nProdVendidos = nProdVendidos;
         this.ventasTotales = ventasTotales;
         this.catalogo = catalogo;
+        this.dueno = dueno;
+        this.empleados = empleados;
     }
     
-    public Franquicia(String nombre, String horaApertura, String horaCierre, String direccion) {
+    public Franquicia(String nombre, String horaApertura, String horaCierre, String direccion, Dueno dueno) {
         this.nombre = nombre;
         this.horaApertura = horaApertura;
         this.horaCierre = horaCierre;
         this.direccion = direccion;
         this.catalogo = new Catalogo();
+        this.dueno = dueno;
+        this.empleados = new ArrayList();
     }
     
     public void ventaProducto(Producto p){  
@@ -56,6 +63,15 @@ public class Franquicia implements Comparable <Franquicia>{
     
     public boolean equals(Franquicia f){
         return (beneficio == f.getBeneficio() && nombre == f.getNombre() && horaApertura == f.getHoraApertura() && horaCierre == f.getHoraCierre() && direccion == f.getDireccion() && catalogo == f.getCatalogo() && nProdVendidos == f.getnProdVendidos() && ventasTotales == f.getVentasTotales());
+    }
+    
+    public void anadirProducto(Producto p){
+        catalogo.anadirProducto(p);
+    }
+    
+    @Override
+    public String toString(){
+        return nombre + "   " + direccion + "   " + horaApertura + "   " + horaCierre;
     }
 
     public String getNombre() {
@@ -102,5 +118,47 @@ public class Franquicia implements Comparable <Franquicia>{
     public int compareTo(Franquicia f){
         return nombre.compareTo(f.nombre);
     }
+
+    public ArrayList<Empleado> getEmpleados() {
+        return empleados;
+    }
+
+    public Dueno getDueno() {
+        return dueno;
+    }
     
+    public void anadirEmpleado(String nombre, String apellidos, String usuario,String password, double sueldo){
+        this.empleados.add(new Empleado(nombre,apellidos,usuario,password,sueldo,this.nombre));
+    }
+    
+    public int esEmpleado(String usuario, String contrasena){//Devuelve el numero del empleado si esta y -1 en otro caso
+        int i = 0;
+        boolean encontrado = false;
+        do{
+            encontrado = (usuario.equals(this.empleados.get(i).getUsuario()) && (contrasena.hashCode() == this.empleados.get(i).getPassword()));
+            i++;
+        }while(i < this.empleados.size() && !encontrado);
+        if(encontrado){
+            return i-1;
+        }
+        else{
+            return -1;
+        }
+        
+    }
+    public int esEmpleado(String usuario, int contrasena){//Devuelve el numero del empleado si esta y -1 en otro caso
+        int i = 0;
+        boolean encontrado = false;
+        do{
+            encontrado = (usuario.equals(this.empleados.get(i).getUsuario()) && (contrasena == this.empleados.get(i).getPassword()));
+            i++;
+        }while(i < this.empleados.size() && !encontrado);
+        if(encontrado){
+            return i-1;
+        }
+        else{
+            return -1;
+        }
+        
+    }
 }
