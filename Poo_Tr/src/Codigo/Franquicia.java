@@ -54,7 +54,7 @@ public class Franquicia implements Comparable <Franquicia>{
         catalogo.eliminar(p);
     }
     
-    public void modificar(String nombre, String horaApertura, String horaCierre, String direccion){
+    public void modificar(String nombre,String direccion, String horaApertura, String horaCierre){
         this.nombre = nombre;
         this.horaApertura = horaApertura;
         this.horaCierre = horaCierre;
@@ -160,5 +160,10 @@ public class Franquicia implements Comparable <Franquicia>{
             return -1;
         }
         
+    }
+    
+    public void remplazarDueno(String nombre, String apellidos, String usuario,String password){
+        this.dueno = null;
+        this.dueno = new Dueno(nombre,apellidos,usuario,password);
     }
 }

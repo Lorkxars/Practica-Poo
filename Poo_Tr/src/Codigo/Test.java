@@ -15,6 +15,7 @@ import java.util.Scanner;
  */
 public class Test {public static void main(String[] args) {
     
+    boolean admin = false;
     Empleado empleado = null; //me hace falta para saltar la variable de un if a otro
     Dueno dueno = null;
     Franquicia faux = null; //Si no la inicializas te da un fallo que no llegaria a producirse pero netbeans es asi
@@ -98,10 +99,83 @@ public class Test {public static void main(String[] args) {
         aux = -7;
     }
     
-    if(estado == 4){//El cliente quiere ver el listado de franquicias
+    if(estado == 4){//El usuario quiere ver el listado de franquicias
+        int decision = -1;
         for(int j=0; j<lrk.getFranquicias().size();j++){
             System.out.println(j +"     " + lrk.getFranquicias().get(j).getNombre());
         }
+        if (admin){
+            System.out.println("Pulse 0 para consultar una franquicia, 1 para modificarla, 2 para eliminarla o 3 para crearla");
+            decision = sk.nextInt();
+            if (decision==1){
+                System.out.println("Introduzca el numero de la franquicia a modificar:");
+                int index = sk.nextInt();
+                if(index>=0 && index< lrk.getFranquicias().size()){
+                System.out.println("Modificando: " + lrk.getFranquicias().get(index));
+                System.out.print("Introduzca nombre: ");
+                String nombre = sk.next();
+                System.out.print("Introduzca direccion: ");
+                String direccion = sk.next();
+                System.out.print("Introduzca hora apertura: ");
+                String horaApertura = sk.next();
+                System.out.print("Introduzca hora cierre: ");
+                String horaCierre = sk.next(); 
+                System.out.println("Modificar franquicia a: " + nombre +"   "+direccion+"   "+horaApertura+"   "+horaCierre+ " continuar y/n?");
+                     String prod = sk.next();
+                     if(prod.equalsIgnoreCase("y")){
+                         lrk.getFranquicias().get(index).modificar(nombre, direccion, horaApertura, horaCierre);
+                         System.out.println("La franquicia ha sido modificada con exito");
+                     }
+                     else{
+                         System.out.println("Se ha cancelado la operacion");
+                     }
+                
+            }}
+            if (decision == 2){
+                System.out.println("Introduzca el numero de la franquicia a eliminar:");
+                int index = sk.nextInt();
+                if(index>=0 && index< lrk.getFranquicias().size()){
+                    System.out.println("Eliminar: " + lrk.getFranquicias().get(index)+ " y/n?");
+                     String prod = sk.next();
+                     if(prod.equalsIgnoreCase("y")){
+                         lrk.eliminaFranquiciar(lrk.getFranquicias().get(index));
+                         System.out.println("La franquicia ha sido eliminada con exito");
+                     }
+                     else{
+                         System.out.println("Se ha cancelado la operacion");
+                     }
+                }
+            }
+            if (decision == 3){
+                System.out.print("Introduzca nombre: ");
+                String nombre = sk.next();
+                System.out.print("Introduzca direccion: ");
+                String direccion = sk.next();
+                System.out.print("Introduzca hora apertura: ");
+                String horaApertura = sk.next();
+                System.out.print("Introduzca hora cierre: ");
+                String horaCierre = sk.next();
+                System.out.print("Nombre dueno: ");
+                String nombred = sk.next();
+                System.out.print("Apellidos dueno: ");
+                String apellidos = sk.next();
+                System.out.print("Usuario dueno: ");
+                String usuario = sk.next();
+                System.out.print("Contrasena dueno: ");
+                String password = sk.next();
+                System.out.println("Crear franquicia: " + nombre +" "+ direccion+" "+horaApertura+" "+horaCierre+" "+ nombred+" " + " continuar y/n?");
+                     String prod = sk.next();
+                     if(prod.equalsIgnoreCase("y")){
+                         Dueno duenoaux = new Dueno(nombred,apellidos,usuario,password);
+                         lrk.anadirFranquicia(new Franquicia(nombre,horaApertura,horaCierre,direccion,duenoaux));
+                         System.out.println("La franquicia ha sido creada con exito");
+                     }
+                     else{
+                         System.out.println("Se ha cancelado la operacion");
+                     }
+            }
+        }
+        if(!admin || decision == 0){
         System.out.println("Si desea consultar alguna franquicia selecione su numero");
         int temp = sk.nextInt();
         if(temp>=0 && temp< lrk.getFranquicias().size()){
@@ -112,28 +186,80 @@ public class Test {public static void main(String[] args) {
         else{
             aux = -7;
         }
+        }
     }
     
     if(estado == 5){//Queremos consultar una franquicia (almacenada en faux)
         System.out.println(faux);
+        if (!admin){
         if (dueno == null || !faux.getDueno().equals(dueno)){
             System.out.println("Si desea consultar el catalogo pulse 1");
         }
         else{
             System.out.println("Si desea consultar el catalogo pulse 1, si desea consultar los empleados de la franquicia pulse 2");
+        }}
+        else{
+            System.out.println("Pulse 1 para consultar el catalogo, 2 para consultar los empleados de la franquicia o 3 para administrar el dueno de la misma");
         }
         int tem = sk.nextInt();
         if(tem == 1){
             estado = 6;
             System.out.println("Accediendo al catalogo de la franquicia");
         }
-        if(dueno != null && faux.getDueno().equals(dueno)){
+        if((dueno != null && faux.getDueno().equals(dueno)) || admin ){
             if (tem == 2){
                 estado = 11;
                 System.out.println("Accediendo a lista de empleados");
             }
         }
-        if(estado == 5){
+        if (admin){
+            if(tem==3){
+                System.out.println(faux.getDueno());
+                System.out.println("Pulse 0 para modificar el actual dueno o 1 para remplazarlo");
+                int decision = sk.nextInt();
+                if(decision == 0){
+                    System.out.print("Nombre dueno: ");
+                    String nombre = sk.next();
+                    System.out.print("Apellidos dueno: ");
+                    String apellidos = sk.next();
+                    System.out.print("Usuario dueno: ");
+                    String usuario = sk.next();
+                    System.out.print("Contrasena dueno: ");
+                    String password = sk.next();
+                    System.out.println("El dueno quedara como: " +nombre +"    "+ apellidos +"    "+usuario+"    "+password + " continuar y/n?");
+                     String prod = sk.next();
+                     if(prod.equalsIgnoreCase("y")){
+                         faux.getDueno().modificar(nombre, apellidos, usuario, password);
+                         System.out.println("La el dueno ha sido modificado con exito");
+                     }
+                     else{
+                         System.out.println("Se ha cancelado la operacion");
+                     }
+                }
+                if(decision == 1){
+                    System.out.print("Nombre dueno: ");
+                    String nombre = sk.next();
+                    System.out.print("Apellidos dueno: ");
+                    String apellidos = sk.next();
+                    System.out.print("Usuario dueno: ");
+                    String usuario = sk.next();
+                    System.out.print("Contrasena dueno: ");
+                    String password = sk.next();
+                    System.out.println("El nuevo dueno sera: " +nombre +"    "+ apellidos +"    "+usuario+"    "+password + " continuar y/n?");
+                     String prod = sk.next();
+                     if(prod.equalsIgnoreCase("y")){
+                         
+                         faux.remplazarDueno(nombre, apellidos, usuario, password);
+                         System.out.println("La el dueno ha sido reemplazado con exito");
+                     }
+                     else{
+                         System.out.println("Se ha cancelado la operacion");
+                     }
+                }
+                
+            }
+        }
+        if(estado == 5 && (tem !=3 || !admin)){
             estado = -7;
         }
         
@@ -293,6 +419,7 @@ public class Test {public static void main(String[] args) {
         if(usuario.equals(lrk.getAdmin().getUsuario()) && (contrasena.hashCode() == lrk.getAdmin().getPassword())){
             System.out.println("Bienvenido admin");
             estado = 7;
+            admin = true;
         }
         else{
             fallos ++;
@@ -455,7 +582,22 @@ public class Test {public static void main(String[] args) {
             aux = -7;
         }
     }
-       
+    if (estado == 7){
+        System.out.println("Pulse 0 para ver el catalogo, 1 para ver las franquicias o 2 para hacer un backup");
+        int decision = sk.nextInt();
+        if(decision == 0){
+            System.out.println("Accediendo al catalogo");
+            estado = 3;
+        }
+         if(decision == 1){
+            System.out.println("Accediendo a la lista de franquicias");
+            estado = 4;
+        }
+          if(decision == 2){
+            System.out.println("Accediendo a la pantalla de administracion de backups");
+            estado = -7;//aun por implementar
+        }
+    } 
         
     }while(aux != -7);//Repetimos todo hasta que algun bloque termine el programa
     }

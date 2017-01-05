@@ -49,4 +49,10 @@ public class Persona {
     public int getPassword() {
         return password;
     }
+    
+    @Override
+    public String toString(){
+        return nombre +"    "+ apellidos +"    "+usuario+"    "+password;
+    }
+    
 }
