@@ -7,12 +7,13 @@ package Codigo;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.io.Serializable;
 
 /**
  *
  * @author david
  */
-public class Empresa {
+public class Empresa implements Serializable{
     private String nombre;
     private ArrayList <Franquicia> franquicias;
     private Persona admin;

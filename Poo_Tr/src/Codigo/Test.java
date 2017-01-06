@@ -5,6 +5,7 @@
  */
 package Codigo;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -22,23 +23,24 @@ public class Test {public static void main(String[] args) {
     Scanner sk= new Scanner (System.in);  
     int aux = 0;
     int estado = 0;
-    //Vamos a preparar algo de contenido para hacer la prueba
-    Empresa lrk = new Empresa("LRK",new Persona("Jefe","Super Jefe","admin","admin"));
-    lrk.anadirFranquicia(new Franquicia("Franquicia 2","09:00","21:00","C/Piruleta",new Dueno("yo","yo mismo","yo","contrasena")));
-    lrk.anadirFranquicia(new Franquicia("Franquicia 1","09:30","21:30","C/Caramelo",new Dueno("yo","yo mismo","yo","contrasena")));
-    lrk.anadirFranquicia(new Franquicia("Franquicia 3","08:00","20:00","C/Chocolate",new Dueno("el","el mismo","el","654321")));
-    lrk.getFranquicias().get(0).anadirProducto(new Rejas("Reja_1","Es una reja",100,150,true,250,100,7,false));
-    lrk.getFranquicias().get(0).anadirProducto(new Ventanas("Ventana_1","Es una ventana",400,500,true,200,250,10,false));
-    lrk.getFranquicias().get(0).anadirProducto(new Pieza_Aluminio("Pieza_aluminio_1","Es una pieza de aluminio",75,100,false,40,70));
-    lrk.getFranquicias().get(1).anadirProducto(new Ventanas("Ventana_2","Es una ventana",600,700,true,400,350,17,true));
-    lrk.getFranquicias().get(2).anadirProducto(new Pieza_Aluminio("Pieza_aluminio_2","Es una pieza de aluminio",50,75,false,30,50));
+//    //Vamos a preparar algo de contenido para hacer la prueba
+//    Empresa lrk = new Empresa("LRK",new Persona("Jefe","Super Jefe","admin","admin"));
+//    lrk.anadirFranquicia(new Franquicia("Franquicia 2","09:00","21:00","C/Piruleta",new Dueno("yo","yo mismo","yo","contrasena")));
+//    lrk.anadirFranquicia(new Franquicia("Franquicia 1","09:30","21:30","C/Caramelo",new Dueno("yo","yo mismo","yo","contrasena")));
+//    lrk.anadirFranquicia(new Franquicia("Franquicia 3","08:00","20:00","C/Chocolate",new Dueno("el","el mismo","el","654321")));
+//    lrk.getFranquicias().get(0).anadirProducto(new Rejas("Reja_1","Es una reja",100,150,true,250,100,7,false));
+//    lrk.getFranquicias().get(0).anadirProducto(new Ventanas("Ventana_1","Es una ventana",400,500,true,200,250,10,false));
+//    lrk.getFranquicias().get(0).anadirProducto(new Pieza_Aluminio("Pieza_aluminio_1","Es una pieza de aluminio",75,100,false,40,70));
+//    lrk.getFranquicias().get(1).anadirProducto(new Ventanas("Ventana_2","Es una ventana",600,700,true,400,350,17,true));
+//    lrk.getFranquicias().get(2).anadirProducto(new Pieza_Aluminio("Pieza_aluminio_2","Es una pieza de aluminio",50,75,false,30,50));
+//    
+//    //Hasta aqui van empresa, franquicias y productos. Ahora vamos a meter algun empleado 
+//    lrk.getFranquicias().get(0).anadirEmpleado("Empleado","1","usuario1","contrasena1",1000);
+//    lrk.getFranquicias().get(0).anadirEmpleado("Empleado","2","usuario2","contrasena2",1500);
+//    lrk.getFranquicias().get(1).anadirEmpleado("Empleado","3","usuario3","contrasena3",2000);
+//    lrk.getFranquicias().get(2).anadirEmpleado("Empleado","4","usuario4","contrasena4",900);
     
-    //Hasta aqui van empresa, franquicias y productos. Ahora vamos a meter algun empleado 
-    lrk.getFranquicias().get(0).anadirEmpleado("Empleado","1","usuario1","contrasena1",1000);
-    lrk.getFranquicias().get(0).anadirEmpleado("Empleado","2","usuario2","contrasena2",1500);
-    lrk.getFranquicias().get(1).anadirEmpleado("Empleado","3","usuario3","contrasena3",2000);
-    lrk.getFranquicias().get(2).anadirEmpleado("Empleado","4","usuario4","contrasena4",900);
-    
+    Empresa lrk = Backups.recuperarBackupAuto();
     do{
     
     if (estado == 0){//Este codigo le pregunta al usuario que tipo de usuario es
@@ -583,7 +585,7 @@ public class Test {public static void main(String[] args) {
         }
     }
     if (estado == 7){
-        System.out.println("Pulse 0 para ver el catalogo, 1 para ver las franquicias o 2 para hacer un backup");
+        System.out.println("Pulse 0 para ver el catalogo, 1 para ver las franquicias o 2 para administrar backups");
         int decision = sk.nextInt();
         if(decision == 0){
             System.out.println("Accediendo al catalogo");
@@ -595,10 +597,44 @@ public class Test {public static void main(String[] args) {
         }
           if(decision == 2){
             System.out.println("Accediendo a la pantalla de administracion de backups");
-            estado = -7;//aun por implementar
+            estado = 12;
         }
     } 
+    
+    if (estado==12){
+        System.out.println("Para crear un backup pulse 1, para restaurar un backup anterior pulse 2");
+        int decision = sk.nextInt();
+        if (decision == 1){
+            System.out.println("Introduzca el nombre con el que quiere crear el Backup:");
+            String path = sk.next();
+            Backups.hacerBackupManual(lrk,path);
+        }
+        if (decision == 2){
+            File folder = new File("Backup");
+            File[] listOfFiles = folder.listFiles();
+            for (int i = 0; i < listOfFiles.length; i++) {
+                if (listOfFiles[i].isFile()) {
+                     System.out.println(listOfFiles[i].getName());
+                } else if (listOfFiles[i].isDirectory()) {
+                    System.out.println("Directory " + listOfFiles[i].getName());
+                }
+            }
+            System.out.println("Introuzca el nombre del backup a restaurar, incluyendo .ser:");
+            String path = sk.next();
+            System.out.println("Restaurar "+ path +" y/n?");
+            String prod = sk.next();
+                     if(prod.equalsIgnoreCase("y")){
+                         lrk = Backups.recuperarBackupManual(path);
+                         System.out.println("Se ha restaurado el Backup con exito");
+                     }
+                     else{
+                         System.out.println("Se ha cancelado la operacion");
+                     }
+        }
+        estado = 7;
+    }
         
     }while(aux != -7);//Repetimos todo hasta que algun bloque termine el programa
+    Backups.hacerBackupAuto(lrk);//Guardamos los cambios para la proxima vez que se abra la aplicacion
     }
 }

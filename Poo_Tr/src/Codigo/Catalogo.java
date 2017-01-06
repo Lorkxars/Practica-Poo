@@ -5,11 +5,12 @@
  */
 package Codigo;
 import java.util.ArrayList;
+import java.io.Serializable;
 /**
  *
  * @author david
  */
-public class Catalogo {
+public class Catalogo implements Serializable{
     private ArrayList <Producto> catalogo;
     
     public Catalogo (){

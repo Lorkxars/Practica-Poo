@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 package Codigo;
-
+import java.io.Serializable;
 /**
  *
  * @author david
  */
-public class Persona {
+public class Persona implements Serializable{
     private String nombre;
     private String apellidos;
     private String usuario;

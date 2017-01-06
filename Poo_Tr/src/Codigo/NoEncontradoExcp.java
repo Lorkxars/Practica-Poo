@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 package Codigo;
-
+import java.io.Serializable;
 /**
  *
  * @author david
  */
-public class NoEncontradoExcp extends Exception {
+public class NoEncontradoExcp extends Exception implements Serializable{
     public NoEncontradoExcp () {
         super();
     }

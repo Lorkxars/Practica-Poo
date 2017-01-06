@@ -7,12 +7,13 @@ package Codigo;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.io.Serializable;
 
 /**
  *
  * @author david
  */
-public class Franquicia implements Comparable <Franquicia>{
+public class Franquicia implements Comparable <Franquicia>, Serializable{
     private String nombre;
     private String horaApertura;
     private String horaCierre;
