@@ -6,7 +6,7 @@
 package Interfaz;
 
 
-import Codigo.Dueno;
+import Codigo.Dueno; //Oh que bonito
 import Codigo.Dueno;
 import Codigo.Empresa;
 import Codigo.Empresa;
