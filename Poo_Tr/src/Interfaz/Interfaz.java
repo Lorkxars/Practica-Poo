@@ -655,7 +655,6 @@ public class Interfaz extends javax.swing.JFrame {
         lrk.anadirFranquicia(new Franquicia("Franquicia 3","08:00","20:00","C/Chocolate",new Dueno("el","el mismo","el","654321")));
         for(int j=0; j<lrk.getFranquicias().size();j++){//Escribe la lista de franquicias
             String msg = lrk.getFranquicias().get(j).getNombre();
-            this.ListaFanquicias.add(msg);
         }
         
         
