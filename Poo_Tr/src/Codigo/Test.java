@@ -16,13 +16,14 @@ import java.util.Scanner;
  */
 public class Test {public static void main(String[] args) {
     
-    boolean admin = false;
-    Empleado empleado = null; //me hace falta para saltar la variable de un if a otro
-    Dueno dueno = null;
+    boolean admin = false;  //Esto nos indica si el usuario logueado es el admin
+    Empleado empleado = null; //me hace falta para saltar la variable de un if a otro, si esta distinto de nulo hay un empleado logueado
+    Dueno dueno = null;     //si esta distinto de nulo hay un dueno logueado
     Franquicia faux = null; //Si no la inicializas te da un fallo que no llegaria a producirse pero netbeans es asi
     Scanner sk= new Scanner (System.in);  
-    int aux = 0;
-    int estado = 0;
+    int aux = 0; //estado == -7 termina el programa
+    int estado = 0; //Cada estado es por lo menos una ventana en la interfaz grafica
+    
 //    //Vamos a preparar algo de contenido para hacer la prueba
 //    Empresa lrk = new Empresa("LRK",new Persona("Jefe","Super Jefe","admin","admin"));
 //    lrk.anadirFranquicia(new Franquicia("Franquicia 2","09:00","21:00","C/Piruleta",new Dueno("yo","yo mismo","yo","contrasena")));
@@ -40,7 +41,7 @@ public class Test {public static void main(String[] args) {
 //    lrk.getFranquicias().get(1).anadirEmpleado("Empleado","3","usuario3","contrasena3",2000);
 //    lrk.getFranquicias().get(2).anadirEmpleado("Empleado","4","usuario4","contrasena4",900);
     
-    Empresa lrk = Backups.recuperarBackupAuto();
+    Empresa lrk = Backups.recuperarBackupAuto();//Carga los datos que habia la ultima vez que se cerro la aplicacion
     do{
     
     if (estado == 0){//Este codigo le pregunta al usuario que tipo de usuario es
@@ -103,10 +104,10 @@ public class Test {public static void main(String[] args) {
     
     if(estado == 4){//El usuario quiere ver el listado de franquicias
         int decision = -1;
-        for(int j=0; j<lrk.getFranquicias().size();j++){
+        for(int j=0; j<lrk.getFranquicias().size();j++){//Escribe la lista de franquicias
             System.out.println(j +"     " + lrk.getFranquicias().get(j).getNombre());
         }
-        if (admin){
+        if (admin){//solo el admin tiene estas opciones
             System.out.println("Pulse 0 para consultar una franquicia, 1 para modificarla, 2 para eliminarla o 3 para crearla");
             decision = sk.nextInt();
             if (decision==1){
@@ -148,7 +149,7 @@ public class Test {public static void main(String[] args) {
                      }
                 }
             }
-            if (decision == 3){
+            if (decision == 3){//Estamos creando una franquicia
                 System.out.print("Introduzca nombre: ");
                 String nombre = sk.next();
                 System.out.print("Introduzca direccion: ");
@@ -157,7 +158,7 @@ public class Test {public static void main(String[] args) {
                 String horaApertura = sk.next();
                 System.out.print("Introduzca hora cierre: ");
                 String horaCierre = sk.next();
-                System.out.print("Nombre dueno: ");
+                System.out.print("Nombre dueno: ");//Nos hce falta crear un dueno por lo que tambien pedimos los datos para crearlo
                 String nombred = sk.next();
                 System.out.print("Apellidos dueno: ");
                 String apellidos = sk.next();
@@ -177,7 +178,7 @@ public class Test {public static void main(String[] args) {
                      }
             }
         }
-        if(!admin || decision == 0){
+        if(!admin || decision == 0){//Esas son tanto para el admin como para el resto de los mortales
         System.out.println("Si desea consultar alguna franquicia selecione su numero");
         int temp = sk.nextInt();
         if(temp>=0 && temp< lrk.getFranquicias().size()){
@@ -192,15 +193,18 @@ public class Test {public static void main(String[] args) {
     }
     
     if(estado == 5){//Queremos consultar una franquicia (almacenada en faux)
-        System.out.println(faux);
+        if(!admin){System.out.println(faux);
+        }else{//El admin de nuevo ve mas informacion
+            System.out.println(faux+"   "+"Productos vendidos: "+faux.getnProdVendidos()+"   "+"Beneficios: "+faux.getBeneficio()+"   "+"Facturacion total: "+ faux.getVentasTotales());
+        }
         if (!admin){
-        if (dueno == null || !faux.getDueno().equals(dueno)){
+        if (dueno == null || !faux.getDueno().equals(dueno)){//opcion para usuarios normales, empleados o duenos de otras franquicias
             System.out.println("Si desea consultar el catalogo pulse 1");
         }
-        else{
+        else{//opcion para el dueno
             System.out.println("Si desea consultar el catalogo pulse 1, si desea consultar los empleados de la franquicia pulse 2");
         }}
-        else{
+        else{//Opcion para el admin
             System.out.println("Pulse 1 para consultar el catalogo, 2 para consultar los empleados de la franquicia o 3 para administrar el dueno de la misma");
         }
         int tem = sk.nextInt();
@@ -208,13 +212,13 @@ public class Test {public static void main(String[] args) {
             estado = 6;
             System.out.println("Accediendo al catalogo de la franquicia");
         }
-        if((dueno != null && faux.getDueno().equals(dueno)) || admin ){
+        if((dueno != null && faux.getDueno().equals(dueno)) || admin ){//Solo para el admin y el dueno de la franquicia
             if (tem == 2){
                 estado = 11;
                 System.out.println("Accediendo a lista de empleados");
             }
         }
-        if (admin){
+        if (admin){//solo para el admin
             if(tem==3){
                 System.out.println(faux.getDueno());
                 System.out.println("Pulse 0 para modificar el actual dueno o 1 para remplazarlo");
@@ -238,7 +242,7 @@ public class Test {public static void main(String[] args) {
                          System.out.println("Se ha cancelado la operacion");
                      }
                 }
-                if(decision == 1){
+                if(decision == 1){//Reemplazar dueno
                     System.out.print("Nombre dueno: ");
                     String nombre = sk.next();
                     System.out.print("Apellidos dueno: ");
@@ -261,7 +265,8 @@ public class Test {public static void main(String[] args) {
                 
             }
         }
-        if(estado == 5 && (tem !=3 || !admin)){
+        if(estado == 5 && (tem !=3 || !admin)){//Si lo que acabamos de hacer ha sido algo relacionado con el dueno no queremos que se acabe el programa
+            //El programa se acaba si el numero introducido no era una de las opciones disponibles
             estado = -7;
         }
         
@@ -269,17 +274,18 @@ public class Test {public static void main(String[] args) {
     
     if (estado == 6){//Estamos acediendo al catalogo de la franquicia almacenada en faux
         for(int z =0; z < faux.getCatalogo().size(); z++){
-            System.out.println(z + "    " + faux.getCatalogo().getProducto(z));
+            System.out.println(z + "    " + faux.getCatalogo().getProducto(z));//imprimimos el catalogo
         }
+        //Opcion para usuarios normales, admin, y duenos y empleados de otras franqucias
         if ((empleado == null ||faux.esEmpleado(empleado.getUsuario(), empleado.getPassword()) == -1) && (dueno == null || !faux.getDueno().equals(dueno))){
             System.out.println("Si quiere que se ordene por precio pulse 0, si quiere buscar un producto pulse 1");
         }
-        else{
+        else{//Solo personal de la franquicia
             System.out.println("Si quiere que se ordene por precio pulse 0, si quiere buscar un producto pulse 1, si quiere vender un producto pulse 2 y si quiere crear un producto pulse 3");
         
         }
         int temp = sk.nextInt();
-        if (temp == 0){
+        if (temp == 0){//Busqueda de producto
             Collections.sort(faux.getCatalogo().getCatalogo());
             for(int z =0; z < faux.getCatalogo().size(); z++){
                 System.out.println(z + "    " + faux.getCatalogo().getProducto(z));
@@ -304,8 +310,11 @@ public class Test {public static void main(String[] args) {
                      System.out.print("Continuar y/n ?");
                      String prod = sk.next();
                      if(prod.equalsIgnoreCase("y")){
-                         faux.ventaProducto(faux.getCatalogo().getProducto(index));
+                         try{faux.ventaProducto(faux.getCatalogo().getProducto(index));
                          System.out.println("El producto se ha vendido con exito");
+                         }catch (NoEncontradoExcp e){
+                             System.out.println(e);
+                         }
                      }
                      else{
                          System.out.println("Se ha cancelado la venta del producto");
@@ -313,7 +322,7 @@ public class Test {public static void main(String[] args) {
                  }
                  aux = 6;
              }
-             if (temp == 3){//Si no se controlan las excepciones petara por todas partes
+             if (temp == 3){//Si no se controlan las excepciones petara por todas partes, por suerte no nos preocupa aqui. Ya se encargaran en la interfaz grafica, espero
                  System.out.println("Pulse 0 para Pieza Aluminio, 1 para Ventana o 2 para Reja");
                  int opcion = sk.nextInt();
                  if (opcion == 0){
@@ -404,7 +413,7 @@ public class Test {public static void main(String[] args) {
                          System.out.println("Se ha cancelado la creacion del producto");
                      }
              }
-                 aux = 6;
+                 aux = 6;//esto nos devuelve a la lista de productos de la franquicia
         }
         } 
         
@@ -466,15 +475,15 @@ public class Test {public static void main(String[] args) {
                 try{
                     faux = lrk.buscarNombre(empleado.getFranquicia());
                 }catch (NoEncontradoExcp e){
-                    System.out.println("Si estas viendo esto la he cagado en alguna parte");
+                    System.out.println("Si estas viendo esto la he cagado en alguna parte");//No deberia haber empleados que no pertenezcan a ninguna franquicia
                 }
                 System.out.println("Accediendo a la franquicia: "+ faux.getNombre());            
                 estado = 5;
             }
-        }while(aux != 3 && aux != 4 && aux !=5);
+        }while(aux != 3 && aux != 4 && aux !=5);//Si no escoges una opcion valida no te mueves de aqui
     }
     
-    if (estado == 8){
+    if (estado == 8){//Interfaz de administracion de los duenos de franquicia
         System.out.println("Para consultar el catalogo pulse 3, para consultar la lista de franquicias pulse 4, para consultar sus franquicias pulse 5");
         do{
             aux = sk.nextInt();
@@ -490,19 +499,19 @@ public class Test {public static void main(String[] args) {
                 System.out.println("Accediendo la lista de sus franquicias");
                 estado = 10;
             }
-        }while(aux != 3 && aux != 4 && aux !=5);
+        }while(aux != 3 && aux != 4 && aux !=5);//Si no escoges una opcion valida no te mueves de aqui
     }
     
-    if (estado == 10){
+    if (estado == 10){//listado de las franquicias del dueno que esta accediendo
         ArrayList <Franquicia> fraux;
         fraux = new ArrayList();
         for (int i = 0; i<lrk.getFranquicias().size(); i++){
-            if (lrk.getFranquicias().get(i).getDueno().equals(dueno)){
+            if (lrk.getFranquicias().get(i).getDueno().equals(dueno)){//almacenas en fraux las franquicias que tienen al dueno que accede de dueno
                 fraux.add(lrk.getFranquicias().get(i));
             }
         }
         for(int j=0; j<fraux.size();j++){
-            System.out.println(j +"     " + fraux.get(j).getNombre());
+            System.out.println(j +"     " + fraux.get(j).getNombre());//Y aqui las pintas
         }
         System.out.println("Si desea consultar alguna franquicia selecione su numero");
         int temp = sk.nextInt();
@@ -513,9 +522,9 @@ public class Test {public static void main(String[] args) {
         }
     }
     
-    if(estado == 11){//Pantalla de administracion de empleados
+    if(estado == 11){//Pantalla de administracion de empleados del admin o el dueno
         for(int i=0; i< faux.getEmpleados().size(); i++){
-            System.out.println(i+"    "+faux.getEmpleados().get(i));
+            System.out.println(i+"    "+faux.getEmpleados().get(i));//los pintas
         }
         System.out.println("Pulse 0 para agregar empleado, 1 para despedir empleado o 2 para modificarlo o 3 para salir");
         int decision = sk.nextInt();
@@ -584,7 +593,7 @@ public class Test {public static void main(String[] args) {
             aux = -7;
         }
     }
-    if (estado == 7){
+    if (estado == 7){//pantalla de administracion del admin
         System.out.println("Pulse 0 para ver el catalogo, 1 para ver las franquicias o 2 para administrar backups");
         int decision = sk.nextInt();
         if(decision == 0){
@@ -601,16 +610,16 @@ public class Test {public static void main(String[] args) {
         }
     } 
     
-    if (estado==12){
+    if (estado==12){//pantalla de administracion de backups (solo el admin puede entrar aqui)
         System.out.println("Para crear un backup pulse 1, para restaurar un backup anterior pulse 2");
         int decision = sk.nextInt();
-        if (decision == 1){
+        if (decision == 1){//crear backup
             System.out.println("Introduzca el nombre con el que quiere crear el Backup:");
             String path = sk.next();
             Backups.hacerBackupManual(lrk,path);
         }
-        if (decision == 2){
-            File folder = new File("Backup");
+        if (decision == 2){//Recuperar backup
+            File folder = new File("Backup");//recupera una lista de todos los archivos de la carpeta backup y los pinta
             File[] listOfFiles = folder.listFiles();
             for (int i = 0; i < listOfFiles.length; i++) {
                 if (listOfFiles[i].isFile()) {
@@ -619,7 +628,7 @@ public class Test {public static void main(String[] args) {
                     System.out.println("Directory " + listOfFiles[i].getName());
                 }
             }
-            System.out.println("Introuzca el nombre del backup a restaurar, incluyendo .ser:");
+            System.out.println("Introuzca el nombre del backup a restaurar, incluyendo .ser:");//aqui empieza a restaurarlos como tal
             String path = sk.next();
             System.out.println("Restaurar "+ path +" y/n?");
             String prod = sk.next();
