@@ -13,8 +13,8 @@ public class Pieza_Aluminio extends Producto{
     private int altura;
     private int anchura;
     
-    public Pieza_Aluminio(String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion, int altura, int anchura){
-        super(nombre, descripcion, pCompra, pVenta, instalacion);
+    public Pieza_Aluminio(String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion, int altura, int anchura, String franquicia){
+        super(nombre, descripcion, pCompra, pVenta, instalacion, franquicia);
         this.altura = (altura >= 0)? altura: 0;
         this.anchura = (anchura >=0)? anchura:0 ;
     }
@@ -30,7 +30,7 @@ public class Pieza_Aluminio extends Producto{
     }
     
     public boolean equals(Pieza_Aluminio p){
-        return ((this.altura== p.altura && this.anchura == p.anchura)&& (this.parecidos(p.getNombre(), p.getDescripcion(), p.getPrecioCompra(), p.getPrecioVenta(), p.isInstalacion())));
+        return ((this.altura== p.altura && this.anchura == p.anchura)&& (this.parecidos(p.getNombre(), p.getDescripcion(), p.getPrecioCompra(), p.getPrecioVenta(), p.isInstalacion(),p.getFranquicia())));
     }
     
     @Override

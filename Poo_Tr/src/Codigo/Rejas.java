@@ -15,8 +15,8 @@ public class Rejas extends Producto{
     private int altura;
     private int anchura;
     
-    public Rejas (String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion, int altura, int anchura, int nbarrotes, boolean personalizado){
-        super(nombre, descripcion, pCompra, pVenta, instalacion);
+    public Rejas (String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion, int altura, int anchura, int nbarrotes, boolean personalizado, String franquicia){
+        super(nombre, descripcion, pCompra, pVenta, instalacion, franquicia);
         this.nbarrotes = nbarrotes;
         this.personalizado = personalizado;
         
@@ -104,7 +104,7 @@ public class Rejas extends Producto{
     }
      
      public boolean equals(Rejas p){
-        return ((this.altura== p.altura && this.anchura == p.anchura && this.nbarrotes == p.nbarrotes && this.personalizado == p.personalizado)&& (this.parecidos(p.getNombre(), p.getDescripcion(), p.getPrecioCompra(), p.getPrecioVenta(), p.isInstalacion())));
+        return ((this.altura== p.altura && this.anchura == p.anchura && this.nbarrotes == p.nbarrotes && this.personalizado == p.personalizado)&& (this.parecidos(p.getNombre(), p.getDescripcion(), p.getPrecioCompra(), p.getPrecioVenta(), p.isInstalacion(),p.getFranquicia())));
     }
 
     public int getNbarrotes() {

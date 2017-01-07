@@ -15,8 +15,8 @@ public class Ventanas extends Producto {
     private int altura;
     private int anchura;
     
-    public Ventanas (String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion, int altura, int anchura, int nhojas, boolean personalizado){
-        super(nombre, descripcion, pCompra, pVenta, instalacion);
+    public Ventanas (String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion, int altura, int anchura, int nhojas, boolean personalizado, String franquicia){
+        super(nombre, descripcion, pCompra, pVenta, instalacion, franquicia);
         this.nhojas = nhojas;
         this.personalizado = personalizado;
         
@@ -104,7 +104,7 @@ public class Ventanas extends Producto {
     }
     
     public boolean equals(Ventanas p){
-        return ((this.altura== p.altura && this.anchura == p.anchura && this.nhojas == p.nhojas && this.personalizado == p.personalizado)&& (this.parecidos(p.getNombre(), p.getDescripcion(), p.getPrecioCompra(), p.getPrecioVenta(), p.isInstalacion())));
+        return ((this.altura== p.altura && this.anchura == p.anchura && this.nhojas == p.nhojas && this.personalizado == p.personalizado)&& (this.parecidos(p.getNombre(), p.getDescripcion(), p.getPrecioCompra(), p.getPrecioVenta(), p.isInstalacion(),p.getFranquicia())));
     }
 
     public int getNhojas() {

@@ -29,11 +29,11 @@ public class Test {public static void main(String[] args) {
 //    lrk.anadirFranquicia(new Franquicia("Franquicia 2","09:00","21:00","C/Piruleta",new Dueno("yo","yo mismo","yo","contrasena")));
 //    lrk.anadirFranquicia(new Franquicia("Franquicia 1","09:30","21:30","C/Caramelo",new Dueno("yo","yo mismo","yo","contrasena")));
 //    lrk.anadirFranquicia(new Franquicia("Franquicia 3","08:00","20:00","C/Chocolate",new Dueno("el","el mismo","el","654321")));
-//    lrk.getFranquicias().get(0).anadirProducto(new Rejas("Reja_1","Es una reja",100,150,true,250,100,7,false));
-//    lrk.getFranquicias().get(0).anadirProducto(new Ventanas("Ventana_1","Es una ventana",400,500,true,200,250,10,false));
-//    lrk.getFranquicias().get(0).anadirProducto(new Pieza_Aluminio("Pieza_aluminio_1","Es una pieza de aluminio",75,100,false,40,70));
-//    lrk.getFranquicias().get(1).anadirProducto(new Ventanas("Ventana_2","Es una ventana",600,700,true,400,350,17,true));
-//    lrk.getFranquicias().get(2).anadirProducto(new Pieza_Aluminio("Pieza_aluminio_2","Es una pieza de aluminio",50,75,false,30,50));
+//    lrk.getFranquicias().get(0).anadirProducto(new Rejas("Reja_1","Es una reja",100,150,true,250,100,7,false, lrk.getFranquicias().get(0).getNombre()));
+//    lrk.getFranquicias().get(0).anadirProducto(new Ventanas("Ventana_1","Es una ventana",400,500,true,200,250,10,false, lrk.getFranquicias().get(0).getNombre()));
+//    lrk.getFranquicias().get(0).anadirProducto(new Pieza_Aluminio("Pieza_aluminio_1","Es una pieza de aluminio",75,100,false,40,70, lrk.getFranquicias().get(0).getNombre()));
+//    lrk.getFranquicias().get(1).anadirProducto(new Ventanas("Ventana_2","Es una ventana",600,700,true,400,350,17,true, lrk.getFranquicias().get(1).getNombre()));
+//    lrk.getFranquicias().get(2).anadirProducto(new Pieza_Aluminio("Pieza_aluminio_2","Es una pieza de aluminio",50,75,false,30,50, lrk.getFranquicias().get(2).getNombre()));
 //    
 //    //Hasta aqui van empresa, franquicias y productos. Ahora vamos a meter algun empleado 
 //    lrk.getFranquicias().get(0).anadirEmpleado("Empleado","1","usuario1","contrasena1",1000);
@@ -344,7 +344,7 @@ public class Test {public static void main(String[] args) {
                      System.out.println("Crear Pieza Aluminio: " +  nombre + " " + descripcion + " " + pCompra + " " +  pVenta + " " +instalacion + " " + altura + " " + anchura + " y/n?");
                      String prod = sk.next();
                      if(prod.equalsIgnoreCase("y")){
-                         faux.anadirProducto(new Pieza_Aluminio(nombre, descripcion, pCompra, pVenta, instalacion, altura, anchura));
+                         faux.anadirProducto(new Pieza_Aluminio(nombre, descripcion, pCompra, pVenta, instalacion, altura, anchura,faux.getNombre()));
                          System.out.println("El producto se ha creado con exito");
                      }
                      else{
@@ -375,7 +375,7 @@ public class Test {public static void main(String[] args) {
                      System.out.println("Crear Ventana: " +  nombre + " " + descripcion + " " + pCompra + " " +  pVenta + " " +instalacion + " " + altura + " " + anchura + " " + nHojas + " " + personalizado + " y/n?");
                      String prod = sk.next();
                      if(prod.equalsIgnoreCase("y")){
-                         faux.anadirProducto(new Ventanas(nombre, descripcion, pCompra, pVenta, instalacion, altura, anchura, nHojas, personalizado));
+                         faux.anadirProducto(new Ventanas(nombre, descripcion, pCompra, pVenta, instalacion, altura, anchura, nHojas, personalizado, faux.getNombre()));
                          System.out.println("El producto se ha creado con exito");
                      }
                      else{
@@ -406,7 +406,7 @@ public class Test {public static void main(String[] args) {
                      System.out.println("Crear Reja: " +  nombre + " " + descripcion + " " + pCompra + " " +  pVenta + " " +instalacion + " " + altura + " " + anchura + " " + nBarrotes + " " + personalizado + " y/n?");
                      String prod = sk.next();
                      if(prod.equalsIgnoreCase("y")){
-                         faux.anadirProducto(new Rejas(nombre, descripcion, pCompra, pVenta, instalacion, altura, anchura, nBarrotes, personalizado));
+                         faux.anadirProducto(new Rejas(nombre, descripcion, pCompra, pVenta, instalacion, altura, anchura, nBarrotes, personalizado,faux.getNombre()));
                          System.out.println("El producto se ha creado con exito");
                      }
                      else{

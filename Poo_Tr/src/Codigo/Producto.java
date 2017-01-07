@@ -17,13 +17,15 @@ abstract class Producto implements Comparable <Producto>, Serializable{
     private double precioVenta;
     private double precioCompra;
     private boolean instalacion;
+    private String franquicia;
     
-    public Producto(String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion){
+    public Producto(String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion, String franquicia){
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioVenta = (pVenta >=0)? pVenta:0;
         this.precioCompra = (pCompra >= 0)? pCompra:0;
         this.instalacion = instalacion;
+        this.franquicia = franquicia;
     }
     
     abstract double calculoBeneficio();
@@ -43,8 +45,8 @@ abstract class Producto implements Comparable <Producto>, Serializable{
     }
  
     //Metodo auxiliar para implementar los equals de las clases hijas
-    protected boolean parecidos (String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion){
-        return (this.nombre == nombre && this.descripcion == descripcion && this.precioCompra == pCompra && this.precioVenta == pVenta && this.instalacion == instalacion);
+    protected boolean parecidos (String nombre, String descripcion, double pCompra, double pVenta, boolean instalacion, String franquicia){
+        return (this.nombre == nombre && this.descripcion == descripcion && this.precioCompra == pCompra && this.precioVenta == pVenta && this.instalacion == instalacion && this.franquicia.equals(franquicia));
     }
     
     @Override
@@ -61,7 +63,7 @@ abstract class Producto implements Comparable <Producto>, Serializable{
     
     @Override
     public String toString(){
-        return nombre + "   " + this.calculoPrecioVenta();
+        return nombre + "   " + this.calculoPrecioVenta()+ "   " + franquicia;
     }
 
     public String getNombre() {
@@ -82,6 +84,10 @@ abstract class Producto implements Comparable <Producto>, Serializable{
 
     public boolean isInstalacion() {
         return instalacion;
+    }
+
+    public String getFranquicia() {
+        return franquicia;
     }
     
     
