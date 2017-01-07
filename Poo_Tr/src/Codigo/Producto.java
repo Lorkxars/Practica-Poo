@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  * @author david
  */
-abstract class Producto implements Comparable <Producto>, Serializable{
+abstract public class Producto implements Comparable <Producto>, Serializable{
     
     //que alguien se prepare el javadoc que yo no me acuerdo XD
     private String nombre;
