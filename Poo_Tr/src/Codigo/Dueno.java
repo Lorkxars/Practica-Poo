@@ -9,7 +9,7 @@ package Codigo;
  *
  * @author david
  */
-public class Dueno extends Persona{
+public class Dueno extends Persona{//p
     public Dueno (String nombre, String apellidos, String usuario,String password){
         super(nombre, apellidos, usuario, password);
     }

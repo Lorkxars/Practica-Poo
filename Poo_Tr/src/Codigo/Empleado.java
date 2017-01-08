@@ -7,7 +7,7 @@ package Codigo;
 
 /**
  *
- * @author david
+ * @author david 
  */
 public class Empleado extends Persona{
     private double sueldo;

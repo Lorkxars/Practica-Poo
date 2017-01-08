@@ -22,7 +22,7 @@ public class Catalogo implements Serializable{
     public boolean esta (Producto p){
         return catalogo.contains(p);
     }
-    public void eliminar (Producto p){
+    public void eliminar (Producto p){//elimina
         catalogo.remove(p);
     }
     public Producto buscarNombre(String nombre) throws NoEncontradoExcp{
