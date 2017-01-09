@@ -21,7 +21,7 @@ public class Test {public static void main(String[] args) {
     Dueno dueno = null;     //si esta distinto de nulo hay un dueno logueado
     Franquicia faux = null; //Si no la inicializas te da un fallo que no llegaria a producirse pero netbeans es asi
     Scanner sk= new Scanner (System.in);  
-    int aux = 0; //estado == -7 termina el programa
+    int aux = 0; //aux == -7 termina el programa
     int estado = 0; //Cada estado es por lo menos una ventana en la interfaz grafica
     
 //    //Vamos a preparar algo de contenido para hacer la prueba
@@ -45,52 +45,71 @@ public class Test {public static void main(String[] args) {
     do{
     
     if (estado == 0){//Este codigo le pregunta al usuario que tipo de usuario es
-    System.out.println("Si es usted usuario pulse 1, si es empleado pulse 2");
-    do {
+     try{
+         System.out.println("Si es usted usuario pulse 1, si es empleado pulse 2");   
         aux = sk.nextInt();
         if (aux == 1){
             System.out.println("Bienvenido cliente");
             estado = 1;
         }
-        if (aux == 2){
+        else if (aux == 2){
             System.out.println("Identifiquese por favor");
             estado = 2;
         }
-    }while (aux != 1 && aux != 2);
+        else {
+            System.out.println("Introduzca una opcion valida");            
+            estado = 0;
+        }
+    }catch (java.util.InputMismatchException e){
+        System.out.println("Introduzca una opcion valida");
+        sk.next();
+        estado = 0;
+    }
     }
     
     if(estado == 1){//Es un cliente
-        System.out.println("Para consultar el catalogo pulse 3, para consultar una lista de nuestras franquicias pulse 4");
-        do{
+       try{ System.out.println("Para consultar el catalogo pulse 0, para consultar una lista de nuestras franquicias pulse 1");
+      
             aux = sk.nextInt();
-            if (aux == 3){
+            if (aux == 0){
                 System.out.println("Accediendo a la lista de productos");
                 estado = 3;
             }
-            if (aux == 4){
+            else if (aux == 1){
                 System.out.println("Accediendo a la lista de franquicias");
                 estado = 4;
-            }            
-        }while(aux != 3 && aux != 4);
+            } 
+            else{
+                System.out.println("Introduzca una opcion valida");
+        estado = 1;
+            }
+            }catch (java.util.InputMismatchException e){
+        System.out.println("Introduzca una opcion valida");
+        sk.next();
+        estado = 1;
+    }
+        
     }
     
     if(estado == 3){//El cliente quiere ver el catalogo general
+        System.out.println("");
+        System.out.println("------------------------------------------------------------");
         for(int i=0; i<lrk.superCatalogo().size();i++){
             System.out.println(lrk.superCatalogo().getProducto(i));
         }
-        System.out.println("Pulse 0 si desea que se ordene por precio, 1 si desea que se ordene por el nombre de la franquicia a la que pertenece o 2 si quiere buscar un producto");
+        try{System.out.println("Pulse 0 si desea que se ordene por precio, 1 si desea que se ordene por el nombre de la franquicia a la que pertenece, 2 si quiere buscar un producto o 3 para salir");
         int temp = sk.nextInt();
         if (temp == 0){
             for(int i=0; i<lrk.superCatalogoP().size();i++){
                 System.out.println(lrk.superCatalogoP().getProducto(i));
             }
         }
-        if (temp == 1){
+        else if (temp == 1){
             for(int i=0; i<lrk.superCatalogoN().size();i++){
                 System.out.println(lrk.superCatalogoN().getProducto(i));
             }
         }
-        if (temp == 2){
+        else if (temp == 2){
             System.out.print("Introduzca el nombre del producto que busca: ");
             String prod = sk.next();
             try{
@@ -99,16 +118,27 @@ public class Test {public static void main(String[] args) {
                 System.out.println("Ese producto no se encuentra en el catalogo");
             }
         }
-        aux = -7;
+        else if(temp == 3){
+            aux = -7;
+        }
+        else{
+            System.out.println("Introduzca una opcion valida");
+        estado = 3;
+        }
+        }catch (java.util.InputMismatchException e){
+        System.out.println("Introduzca una opcion valida");
+        sk.next();
+        estado = 3;
+    }
     }
     
     if(estado == 4){//El usuario quiere ver el listado de franquicias
-        int decision = -1;
+        int decision = -1;//Valor no significativo, solo evita error por posible acceso a varaible no inicializada
         for(int j=0; j<lrk.getFranquicias().size();j++){//Escribe la lista de franquicias
             System.out.println(j +"     " + lrk.getFranquicias().get(j).getNombre());
         }
         if (admin){//solo el admin tiene estas opciones
-            System.out.println("Pulse 0 para consultar una franquicia, 1 para modificarla, 2 para eliminarla o 3 para crearla");
+            try{System.out.println("Pulse 0 para consultar una franquicia, 1 para modificarla, 2 para eliminarla o 3 para crearla");
             decision = sk.nextInt();
             if (decision==1){
                 System.out.println("Introduzca el numero de la franquicia a modificar:");
@@ -177,20 +207,35 @@ public class Test {public static void main(String[] args) {
                          System.out.println("Se ha cancelado la operacion");
                      }
             }
-        }
+        }catch (java.util.InputMismatchException e){
+        System.out.println("Introduzca una opcion valida");
+        sk.next();
+        estado = 4;
+    }}
         if(!admin || decision == 0){//Esas son tanto para el admin como para el resto de los mortales
-        System.out.println("Si desea consultar alguna franquicia selecione su numero");
+        try{System.out.println("Si desea consultar alguna franquicia selecione su numero, si desea salir pulse -1");
         int temp = sk.nextInt();
         if(temp>=0 && temp< lrk.getFranquicias().size()){
             faux = lrk.getFranquicias().get(temp);
             System.out.println("Accediendo a la franquicia: "+ faux.getNombre());            
             estado = 5;
-        }
-        else{
+        }else if(temp == -1){
             aux = -7;
+        }}catch (java.util.InputMismatchException e){
+        System.out.println("Introduzca una opcion valida");
+        sk.next();
+        estado = 4;
+    }}
+        else{
+            if(!admin){
+            aux = -7;}
+            else{
+                System.out.println("Introduzca una opcion valida");
+        estado = 4;
+            }
         }
         }
-    }
+    
     
     if(estado == 5){//Queremos consultar una franquicia (almacenada en faux)
         if(!admin){System.out.println(faux);
@@ -199,15 +244,18 @@ public class Test {public static void main(String[] args) {
         }
         if (!admin){
         if (dueno == null || !faux.getDueno().equals(dueno)){//opcion para usuarios normales, empleados o duenos de otras franquicias
-            System.out.println("Si desea consultar el catalogo pulse 1");
+            System.out.println("Si desea consultar el catalogo pulse 1, si desea salir pulse 4");
         }
         else{//opcion para el dueno
-            System.out.println("Si desea consultar el catalogo pulse 1, si desea consultar los empleados de la franquicia pulse 2");
+            System.out.println("Si desea consultar el catalogo pulse 1, si desea consultar los empleados de la franquicia pulse 2, si desea salir pulse 4");
         }}
         else{//Opcion para el admin
-            System.out.println("Pulse 1 para consultar el catalogo, 2 para consultar los empleados de la franquicia o 3 para administrar el dueno de la misma");
+            System.out.println("Pulse 1 para consultar el catalogo, 2 para consultar los empleados de la franquicia o 3 para administrar el dueno de la misma, si desea salir pulse 4");
         }
-        int tem = sk.nextInt();
+        try{int tem = sk.nextInt();
+        if (tem == 4){
+            aux = -7;
+        }
         if(tem == 1){
             estado = 6;
             System.out.println("Accediendo al catalogo de la franquicia");
@@ -222,7 +270,7 @@ public class Test {public static void main(String[] args) {
             if(tem==3){
                 System.out.println(faux.getDueno());
                 System.out.println("Pulse 0 para modificar el actual dueno o 1 para remplazarlo");
-                int decision = sk.nextInt();
+                try{int decision = sk.nextInt();
                 if(decision == 0){
                     System.out.print("Nombre dueno: ");
                     String nombre = sk.next();
@@ -242,7 +290,7 @@ public class Test {public static void main(String[] args) {
                          System.out.println("Se ha cancelado la operacion");
                      }
                 }
-                if(decision == 1){//Reemplazar dueno
+                else if(decision == 1){//Reemplazar dueno
                     System.out.print("Nombre dueno: ");
                     String nombre = sk.next();
                     System.out.print("Apellidos dueno: ");
@@ -261,30 +309,46 @@ public class Test {public static void main(String[] args) {
                      else{
                          System.out.println("Se ha cancelado la operacion");
                      }
+                }else{
+                    System.out.println("Introduzca una opcion valida");
+            sk.next();
+         estado = 4;
                 }
-                
+             }catch (java.util.InputMismatchException e){
+        System.out.println("Introduzca una opcion valida");
+        sk.next();
+        estado = 4;
+                     }
+   
             }
         }
-        if(estado == 5 && (tem !=3 || !admin)){//Si lo que acabamos de hacer ha sido algo relacionado con el dueno no queremos que se acabe el programa
-            //El programa se acaba si el numero introducido no era una de las opciones disponibles
-            estado = -7;
+        if(estado == 5 && (tem !=3 || !admin)){//Si lo que acabamos de hacer ha sido algo relacionado con el dueno no queremos que de error
+            System.out.println("Introduzca una opcion valida");           
         }
-        
+        }catch (java.util.InputMismatchException e){
+        System.out.println("Introduzca una opcion valida");
+        sk.next();
+        estado = 5;
+        }
+
     }
     
     if (estado == 6){//Estamos acediendo al catalogo de la franquicia almacenada en faux
+        System.out.println("");
+        System.out.println("-----------------------");
         for(int z =0; z < faux.getCatalogo().size(); z++){
             System.out.println(z + "    " + faux.getCatalogo().getProducto(z));//imprimimos el catalogo
         }
         //Opcion para usuarios normales, admin, y duenos y empleados de otras franqucias
         if ((empleado == null ||faux.esEmpleado(empleado.getUsuario(), empleado.getPassword()) == -1) && (dueno == null || !faux.getDueno().equals(dueno))){
-            System.out.println("Si quiere que se ordene por precio pulse 0, si quiere buscar un producto pulse 1");
+            System.out.println("Si quiere que se ordene por precio pulse 0, si quiere buscar un producto pulse 1 o pulse 4 para finalizar el programa");
         }
         else{//Solo personal de la franquicia
-            System.out.println("Si quiere que se ordene por precio pulse 0, si quiere buscar un producto pulse 1, si quiere vender un producto pulse 2 y si quiere crear un producto pulse 3");
+            System.out.println("Si quiere que se ordene por precio pulse 0, si quiere buscar un producto pulse 1, si quiere vender un producto pulse 2, si quiere crear un producto pulse 3 o pulse 4 para finalizar el programa");
         
         }
-        int temp = sk.nextInt();
+        int temp = -1;//Si la dejas dentro del try o no la inicializas peta...
+        try{ temp = sk.nextInt();
         if (temp == 0){//Busqueda de producto
             Collections.sort(faux.getCatalogo().getCatalogo());
             for(int z =0; z < faux.getCatalogo().size(); z++){
@@ -298,13 +362,17 @@ public class Test {public static void main(String[] args) {
                 System.out.println(faux.getCatalogo().buscarNombre(prod));
             }catch (NoEncontradoExcp e){
                 System.out.println("Ese producto no se encuentra en el catalogo");
-            }
-        }
-        aux = -7; //Los bloques de despues no acabarian con la ejecucion del programa, por eso esto esta aqui
+            }}
+        
+        }catch (java.util.InputMismatchException e){
+        System.out.println("Introduzca una opcion valida");
+        sk.next();
+        estado = 4;
+                     }
         if ((empleado != null && faux.esEmpleado(empleado.getUsuario(), empleado.getPassword()) != -1) || (dueno != null && faux.getDueno().equals(dueno))){
              if (temp == 2){
                  System.out.print("Introduzca el numero del producto a vender: ");
-                 int index = sk.nextInt();
+                 try{int index = sk.nextInt();
                  if(index>=0 && index < faux.getCatalogo().size()){
                      System.out.println("Va a vender el producto: " + faux.getCatalogo().getProducto(index));
                      System.out.print("Continuar y/n ?");
@@ -320,9 +388,14 @@ public class Test {public static void main(String[] args) {
                          System.out.println("Se ha cancelado la venta del producto");
                      }
                  }
-                 aux = 6;
+                 estado = 6;
+             }catch (java.util.InputMismatchException e){
+                 sk.next();
+                 System.out.println("Eres un inutil de empleado, y si eres el dueno ya ni te cuento");
+                 estado = 6;    
              }
-             if (temp == 3){//Si no se controlan las excepciones petara por todas partes, por suerte no nos preocupa aqui. Ya se encargaran en la interfaz grafica, espero
+             }
+             try{if (temp == 3){//Si no se controlan las excepciones petara por todas partes, por suerte no me preocupa aqui. Ya se encargaran en la interfaz grafica, espero
                  System.out.println("Pulse 0 para Pieza Aluminio, 1 para Ventana o 2 para Reja");
                  int opcion = sk.nextInt();
                  if (opcion == 0){
@@ -412,12 +485,17 @@ public class Test {public static void main(String[] args) {
                      else{
                          System.out.println("Se ha cancelado la creacion del producto");
                      }
-             }
-                 aux = 6;//esto nos devuelve a la lista de productos de la franquicia
+             }}}catch (java.util.InputMismatchException e){
+                     System.out.println("Algo has hecho mal, reflexiona sobre ello antes de volver a intentarlo");
+                     sk.next();
+                     aux = -1;
+                     }}
+        if(temp == 4){
+            aux = -7;
         }
-        } 
-        
-    }
+                 estado = 6;//esto nos devuelve a la lista de productos de la franquicia
+        }
+       
     
     if(estado == 2){//El usuario esta tratando de aceder como personal registrado
         System.out.print("Introduzca usuario: ");
@@ -460,18 +538,17 @@ public class Test {public static void main(String[] args) {
     }
     
     if(estado== 9){//Es un empleado, le dirigimos a la pantalla de administracion para empleados
-        System.out.println("Para consultar el catalogo pulse 3, para consultar la lista de franquicias pulse 4, para consultar su franquicia pulse 5");
-        do{
-            aux = sk.nextInt();
-            if (aux == 3){
+        System.out.println("Para consultar el catalogo pulse 0, para consultar la lista de franquicias pulse 1, para consultar su franquicia pulse 2");
+            try{aux = sk.nextInt();
+            if (aux == 0){
                 System.out.println("Accediendo a la lista de productos");
                 estado = 3;
             }
-            if (aux == 4){
+            else if (aux == 1){
                 System.out.println("Accediendo a la lista de franquicias");
                 estado = 4;
             }            
-            if (aux == 5){
+            else if (aux == 2){
                 try{
                     faux = lrk.buscarNombre(empleado.getFranquicia());
                 }catch (NoEncontradoExcp e){
@@ -479,27 +556,41 @@ public class Test {public static void main(String[] args) {
                 }
                 System.out.println("Accediendo a la franquicia: "+ faux.getNombre());            
                 estado = 5;
+            }else{
+                System.out.println("Animo, que ya te quedan menos numeros por probar");
+                estado = 9;
             }
-        }while(aux != 3 && aux != 4 && aux !=5);//Si no escoges una opcion valida no te mueves de aqui
+            }catch (java.util.InputMismatchException e){
+                System.out.println("Parece que no sabemos distinguir numeros de letras...");
+                sk.next();
+                estado = 9;
+            }
     }
     
     if (estado == 8){//Interfaz de administracion de los duenos de franquicia
-        System.out.println("Para consultar el catalogo pulse 3, para consultar la lista de franquicias pulse 4, para consultar sus franquicias pulse 5");
-        do{
-            aux = sk.nextInt();
-            if (aux == 3){
+        System.out.println("Para consultar el catalogo pulse 0, para consultar la lista de franquicias pulse 1, para consultar sus franquicias pulse 2");
+            try{aux = sk.nextInt();
+            if (aux == 0){
                 System.out.println("Accediendo a la lista de productos");
                 estado = 3;
             }
-            if (aux == 4){
+            else if (aux == 1){
                 System.out.println("Accediendo a la lista de franquicias");
                 estado = 4;
             }            
-            if (aux == 5){
+            else if (aux == 2){
                 System.out.println("Accediendo la lista de sus franquicias");
                 estado = 10;
             }
-        }while(aux != 3 && aux != 4 && aux !=5);//Si no escoges una opcion valida no te mueves de aqui
+            else{
+                System.out.println("Animo, que ya te quedan menos numeros por probar");
+                estado = 8;
+            }
+            }catch (java.util.InputMismatchException e){
+                System.out.println("Parece que no sabemos distinguir numeros de letras...");
+                sk.next();
+                estado = 8;
+            }
     }
     
     if (estado == 10){//listado de las franquicias del dueno que esta accediendo
@@ -514,12 +605,17 @@ public class Test {public static void main(String[] args) {
             System.out.println(j +"     " + fraux.get(j).getNombre());//Y aqui las pintas
         }
         System.out.println("Si desea consultar alguna franquicia selecione su numero");
-        int temp = sk.nextInt();
+        try{int temp = sk.nextInt();
         if(temp>=0 && temp< fraux.size()){
             faux = fraux.get(temp);
             System.out.println("Accediendo a la franquicia: "+ faux.getNombre());            
             estado = 5;
         }
+       }catch (java.util.InputMismatchException e){
+                System.out.println("Parece que no sabemos distinguir numeros de letras...");
+                sk.next();
+                estado = 10;
+            }
     }
     
     if(estado == 11){//Pantalla de administracion de empleados del admin o el dueno
@@ -527,7 +623,7 @@ public class Test {public static void main(String[] args) {
             System.out.println(i+"    "+faux.getEmpleados().get(i));//los pintas
         }
         System.out.println("Pulse 0 para agregar empleado, 1 para despedir empleado o 2 para modificarlo o 3 para salir");
-        int decision = sk.nextInt();
+        try{int decision = sk.nextInt();
         if (decision == 0){
             System.out.println("Agregando empleado");
             System.out.print("Nombre: ");
@@ -592,10 +688,15 @@ public class Test {public static void main(String[] args) {
         if(decision==3){
             aux = -7;
         }
-    }
+    }catch (java.util.InputMismatchException e){
+                System.out.println("Parece que no sabemos distinguir numeros de letras...");
+                sk.next();
+                estado = 11;
+            }}
+    
     if (estado == 7){//pantalla de administracion del admin
         System.out.println("Pulse 0 para ver el catalogo, 1 para ver las franquicias o 2 para administrar backups");
-        int decision = sk.nextInt();
+        try{ int decision = sk.nextInt();
         if(decision == 0){
             System.out.println("Accediendo al catalogo");
             estado = 3;
@@ -608,11 +709,15 @@ public class Test {public static void main(String[] args) {
             System.out.println("Accediendo a la pantalla de administracion de backups");
             estado = 12;
         }
-    } 
+    }catch (java.util.InputMismatchException e){
+                System.out.println("Parece que no sabemos distinguir numeros de letras...");
+                sk.next();
+                estado = 7;
+            }} 
     
     if (estado==12){//pantalla de administracion de backups (solo el admin puede entrar aqui)
         System.out.println("Para crear un backup pulse 1, para restaurar un backup anterior pulse 2");
-        int decision = sk.nextInt();
+        try{int decision = sk.nextInt();
         if (decision == 1){//crear backup
             System.out.println("Introduzca el nombre con el que quiere crear el Backup:");
             String path = sk.next();
@@ -641,9 +746,13 @@ public class Test {public static void main(String[] args) {
                      }
         }
         estado = 7;
-    }
+    }catch (java.util.InputMismatchException e){
+                System.out.println("Parece que no sabemos distinguir numeros de letras...");
+                sk.next();
+                estado = 12;
+            }}
         
-    }while(aux != -7);//Repetimos todo hasta que algun bloque termine el programa
+    }while(aux != -7);//Repetimos todo hasta que algun bloque termine el programa, deberia haber heccho los bloques if con case pero no me da tiempo a cambiarlo
     Backups.hacerBackupAuto(lrk);//Guardamos los cambios para la proxima vez que se abra la aplicacion
     }
 }
