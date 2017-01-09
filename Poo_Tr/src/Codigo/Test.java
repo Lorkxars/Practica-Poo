@@ -23,6 +23,7 @@ public class Test {public static void main(String[] args) {
     Scanner sk= new Scanner (System.in);  
     int aux = 0; //aux == -7 termina el programa
     int estado = 0; //Cada estado es por lo menos una ventana en la interfaz grafica
+    boolean so = false;
     
 //    //Vamos a preparar algo de contenido para hacer la prueba
 //    Empresa lrk = new Empresa("LRK",new Persona("Jefe","Super Jefe","admin","admin"));
@@ -40,8 +41,12 @@ public class Test {public static void main(String[] args) {
 //    lrk.getFranquicias().get(0).anadirEmpleado("Empleado","2","usuario2","contrasena2",1500);
 //    lrk.getFranquicias().get(1).anadirEmpleado("Empleado","3","usuario3","contrasena3",2000);
 //    lrk.getFranquicias().get(2).anadirEmpleado("Empleado","4","usuario4","contrasena4",900);
-    
-    Empresa lrk = Backups.recuperarBackupAuto();//Carga los datos que habia la ultima vez que se cerro la aplicacion
+            System.out.println("Utiliza linux ahora mismo:");
+            try{so =sk.nextBoolean();            
+            }catch (java.util.InputMismatchException e){
+                System.out.println("Con esa contestacion supongo que no");
+    }
+    Empresa lrk = Backups.recuperarBackupAuto(so);//Carga los datos que habia la ultima vez que se cerro la aplicacion
     do{
     
     if (estado == 0){//Este codigo le pregunta al usuario que tipo de usuario es
@@ -721,7 +726,7 @@ public class Test {public static void main(String[] args) {
         if (decision == 1){//crear backup
             System.out.println("Introduzca el nombre con el que quiere crear el Backup:");
             String path = sk.next();
-            Backups.hacerBackupManual(lrk,path);
+            Backups.hacerBackupManual(lrk,path,so);
         }
         if (decision == 2){//Recuperar backup
             File folder = new File("Backup");//recupera una lista de todos los archivos de la carpeta backup y los pinta
@@ -738,7 +743,7 @@ public class Test {public static void main(String[] args) {
             System.out.println("Restaurar "+ path +" y/n?");
             String prod = sk.next();
                      if(prod.equalsIgnoreCase("y")){
-                         lrk = Backups.recuperarBackupManual(path);
+                         lrk = Backups.recuperarBackupManual(path,so);
                          System.out.println("Se ha restaurado el Backup con exito");
                      }
                      else{
@@ -753,6 +758,6 @@ public class Test {public static void main(String[] args) {
             }}
         
     }while(aux != -7);//Repetimos todo hasta que algun bloque termine el programa, deberia haber heccho los bloques if con case pero no me da tiempo a cambiarlo
-    Backups.hacerBackupAuto(lrk);//Guardamos los cambios para la proxima vez que se abra la aplicacion
+    Backups.hacerBackupAuto(lrk, so);//Guardamos los cambios para la proxima vez que se abra la aplicacion
     }
 }

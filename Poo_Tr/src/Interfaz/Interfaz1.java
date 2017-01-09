@@ -27,7 +27,7 @@ public class Interfaz1 extends javax.swing.JFrame {
      */
     public Interfaz1() {
         initComponents();
-        lrk = Backups.recuperarBackupAuto();
+        lrk = Backups.recuperarBackupAuto(false);
     }
 
     /**

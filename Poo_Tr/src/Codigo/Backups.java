@@ -20,10 +20,22 @@ public class Backups {//p
      * y la guarda en Backup/backup.ser
      * @param e es la clase empresa de la que se quiere hacer el backup
      */
-    public static void hacerBackupAuto(Empresa e){
-      try {
-         FileOutputStream fileOut =
-         new FileOutputStream("Backup"+separator+"backup.ser");
+    
+    //so true = linux
+    public static void hacerBackupAuto(Empresa e, boolean so){      
+          if(so){
+              try {
+         FileOutputStream fileOut = new FileOutputStream("/backup.ser");
+         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+         out.writeObject(e);
+         out.close();
+         fileOut.close();
+      }catch(IOException i) {
+         i.printStackTrace();
+      }}
+      if(!so){
+          try {
+         FileOutputStream fileOut = new FileOutputStream("C:\\backup.ser");
          ObjectOutputStream out = new ObjectOutputStream(fileOut);
          out.writeObject(e);
          out.close();
@@ -31,7 +43,7 @@ public class Backups {//p
       }catch(IOException i) {
          i.printStackTrace();
       }
-    }
+    }}
     
     /**
      * Crea un backup de la empresa que se le suministra y la guarda en el directorio backup 
@@ -39,10 +51,12 @@ public class Backups {//p
      * @param e es la clase empresa de la que se quiere hacer el backup
      * @param path es el nombre que se le quiere dar al backup
      */
-      public static void hacerBackupManual(Empresa e, String path){
-      try {
+      public static void hacerBackupManual(Empresa e, String path,boolean so){
+      
+          if(so){
+          try {
          FileOutputStream fileOut =
-         new FileOutputStream("Backup"+separator+ path + ".ser");
+         new FileOutputStream("/"+path + ".ser");
          ObjectOutputStream out = new ObjectOutputStream(fileOut);
          out.writeObject(e);
          out.close();
@@ -51,15 +65,30 @@ public class Backups {//p
       }catch(IOException i) {
          i.printStackTrace();
       }
+          }
+          else{
+          try {
+         FileOutputStream fileOut =
+         new FileOutputStream("C:" +separator +path + ".ser");
+         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+         out.writeObject(e);
+         out.close();
+         fileOut.close();
+         System.out.println("Serialized data is saved in Backup/"+ path +".ser");
+      }catch(IOException i) {
+         i.printStackTrace();
+      }
+          }
    }
       /**
        * Recupera el backup de la empresa almcenado en Backup/backup.ser
        * @return es la empresa que se habia respaldado
        */
-      public static Empresa recuperarBackupAuto(){
+      public static Empresa recuperarBackupAuto(boolean so){
           Empresa e = null;
-      try {
-         FileInputStream fileIn = new FileInputStream("Backup"+separator+"backup.ser");
+      if(so){
+          try {
+         FileInputStream fileIn = new FileInputStream("/backup.ser");
          ObjectInputStream in = new ObjectInputStream(fileIn);
          e = (Empresa) in.readObject();
          in.close();
@@ -71,7 +100,22 @@ public class Backups {//p
          System.out.println("Empresa class not found");
          c.printStackTrace();
          
-      }
+      }}
+      else{
+          try {
+         FileInputStream fileIn = new FileInputStream("C:\\backup.ser");
+         ObjectInputStream in = new ObjectInputStream(fileIn);
+         e = (Empresa) in.readObject();
+         in.close();
+         fileIn.close();
+      }catch(IOException i) {
+         i.printStackTrace();
+         
+      }catch(ClassNotFoundException c) {
+         System.out.println("Empresa class not found");
+         c.printStackTrace();
+         
+      }}
       return e;
       }
       
@@ -80,10 +124,11 @@ public class Backups {//p
        * @param path es el nombre del backup a restaurar
        * @return es la empresa que se habia respaldado
        */
-      public static Empresa recuperarBackupManual(String path){
+      public static Empresa recuperarBackupManual(String path, boolean so){
           Empresa e = null;
+          if(so){
       try {
-         FileInputStream fileIn = new FileInputStream("Backup"+separator+path);
+         FileInputStream fileIn = new FileInputStream("/"+path);
          ObjectInputStream in = new ObjectInputStream(fileIn);
          e = (Empresa) in.readObject();
          in.close();
@@ -95,7 +140,22 @@ public class Backups {//p
          System.out.println("Empresa class not found");
          c.printStackTrace();
          
-      }
+      }}
+          else{
+      try {
+         FileInputStream fileIn = new FileInputStream("C:\\"+path);
+         ObjectInputStream in = new ObjectInputStream(fileIn);
+         e = (Empresa) in.readObject();
+         in.close();
+         fileIn.close();
+      }catch(IOException i) {
+         i.printStackTrace();
+         
+      }catch(ClassNotFoundException c) {
+         System.out.println("Empresa class not found");
+         c.printStackTrace();
+         
+      }}
       return e;
       }
 }
