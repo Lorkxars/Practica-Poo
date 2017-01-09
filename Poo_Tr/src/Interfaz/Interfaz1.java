@@ -21,12 +21,13 @@ import javax.swing.event.DocumentListener;
  * @author pablo
  */
 public class Interfaz1 extends javax.swing.JFrame {
-
+    private Empresa lrk;
     /**
      * Creates new form Interfaz
      */
     public Interfaz1() {
         initComponents();
+        lrk = Backups.recuperarBackupAuto();
     }
 
     /**
@@ -82,10 +83,10 @@ public class Interfaz1 extends javax.swing.JFrame {
         OrdenNombre = new javax.swing.JCheckBox();
         OrdenPrecio = new javax.swing.JCheckBox();
         Productos = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        ListaProductos = new javax.swing.JList<>();
         BusquedaProducto = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        ListaProductos = new javax.swing.JList<>();
         Empleados = new javax.swing.JPanel();
         Empleados.setVisible(false);
         NombreEmpleado = new javax.swing.JLabel();
@@ -309,7 +310,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                     .addGroup(FranquiciasLayout.createSequentialGroup()
                         .addGap(96, 96, 96)
                         .addComponent(BuscarFranquicia, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(433, Short.MAX_VALUE))
+                .addContainerGap(397, Short.MAX_VALUE))
         );
         FranquiciasLayout.setVerticalGroup(
             FranquiciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,7 +323,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BuscarFranquicia, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(221, Short.MAX_VALUE))
+                .addContainerGap(217, Short.MAX_VALUE))
         );
 
         DetallesFranquicia.setMaximumSize(new java.awt.Dimension(700, 500));
@@ -365,7 +366,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                             .addComponent(HoraApertura, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
                             .addComponent(HoraCierre, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Direccion, javax.swing.GroupLayout.Alignment.LEADING))))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         DetallesFranquiciaLayout.setVerticalGroup(
             DetallesFranquiciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,7 +389,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                     .addComponent(Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addContainerGap(293, Short.MAX_VALUE))
         );
 
         CatalogoInter.setMaximumSize(new java.awt.Dimension(700, 500));
@@ -407,18 +408,19 @@ public class Interfaz1 extends javax.swing.JFrame {
 
         Productos.setText("Productos:");
 
-        lrk.getFranquicias().get(0).anadirProducto(new Rejas("Reja_1","Es una reja",100,150,true,250,100,7,false, lrk.getFranquicias().get(0).getNombre()));
-        lrk.getFranquicias().get(0).anadirProducto(new Ventanas("Ventana_1","Es una ventana",400,500,true,200,250,10,false, lrk.getFranquicias().get(0).getNombre()));
-        lrk.getFranquicias().get(1).anadirProducto(new Ventanas("Ventana_2","Es una ventana",600,700,true,400,350,17,true, lrk.getFranquicias().get(1).getNombre()));
-        lrk.getFranquicias().get(2).anadirProducto(new Pieza_Aluminio("Pieza_aluminio_2","Es una pieza de aluminio",50,75,false,30,50, lrk.getFranquicias().get(2).getNombre()));
-        DefaultListModel <Producto> listModel1;
-        listModel1 = new DefaultListModel();
-        for(int i=0; i<lrk.superCatalogo().size();i++){
-            listModel1.addElement(lrk.superCatalogo().getProducto(i));
-        }
-        jScrollPane3.setViewportView(ListaProductos);
-
         jButton1.setText("Buscar producto");
+
+        DefaultListModel <Producto> x;
+        x = new DefaultListModel();
+        for(int i=0; i<lrk.superCatalogoP().size();i++){
+            x.addElement(lrk.superCatalogo().getProducto(i));
+        }
+        ListaProductos.setModel(x);
+        ListaProductos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        ListaProductos.setToolTipText("");
+        jScrollPane5.setViewportView(ListaProductos);
+        ListaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ListaProductos.setSelectedIndex(0);
 
         javax.swing.GroupLayout CatalogoInterLayout = new javax.swing.GroupLayout(CatalogoInter);
         CatalogoInter.setLayout(CatalogoInterLayout);
@@ -438,7 +440,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                                 .addComponent(BusquedaProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(65, 65, 65)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         CatalogoInterLayout.setVerticalGroup(
@@ -455,8 +457,8 @@ public class Interfaz1 extends javax.swing.JFrame {
                     .addComponent(BusquedaProducto)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(226, 226, 226))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(129, 129, 129))
         );
 
         Empleados.setMaximumSize(new java.awt.Dimension(700, 500));
@@ -494,7 +496,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                             .addGroup(EmpleadosLayout.createSequentialGroup()
                                 .addGap(17, 17, 17)
                                 .addComponent(Verificar)))))
-                .addContainerGap(440, Short.MAX_VALUE))
+                .addContainerGap(413, Short.MAX_VALUE))
         );
         EmpleadosLayout.setVerticalGroup(
             EmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -561,7 +563,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                     .addComponent(EmpleConFran, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(EmpleFran, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(291, Short.MAX_VALUE))
+                .addContainerGap(290, Short.MAX_VALUE))
         );
 
         ProductosFranquicia.setMaximumSize(new java.awt.Dimension(700, 500));
@@ -625,7 +627,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                     .addGroup(ProductosFranquiciaLayout.createSequentialGroup()
                         .addGap(132, 132, 132)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(246, Short.MAX_VALUE))
+                .addContainerGap(242, Short.MAX_VALUE))
         );
 
         ProductosEmpleado.setMaximumSize(new java.awt.Dimension(700, 500));
@@ -671,7 +673,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                         .addComponent(jButton3)
                         .addGap(54, 54, 54)
                         .addComponent(CrearProducto)))
-                .addGap(0, 352, Short.MAX_VALUE))
+                .addGap(0, 282, Short.MAX_VALUE))
         );
         ProductosEmpleadoLayout.setVerticalGroup(
             ProductosEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -691,7 +693,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                 .addGroup(ProductosEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(CrearProducto))
-                .addContainerGap(217, Short.MAX_VALUE))
+                .addContainerGap(212, Short.MAX_VALUE))
         );
 
         CreacionProducto.setMaximumSize(new java.awt.Dimension(700, 500));
@@ -732,7 +734,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                         .addComponent(jButton9)
                         .addGap(54, 54, 54)
                         .addComponent(jButton10)))
-                .addContainerGap(462, Short.MAX_VALUE))
+                .addContainerGap(431, Short.MAX_VALUE))
         );
         CreacionProductoLayout.setVerticalGroup(
             CreacionProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -743,7 +745,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                 .addGroup(CreacionProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton9)
                     .addComponent(jButton10))
-                .addContainerGap(382, Short.MAX_VALUE))
+                .addContainerGap(378, Short.MAX_VALUE))
         );
 
         Aluminio.setMaximumSize(new java.awt.Dimension(700, 500));
@@ -771,7 +773,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                     .addComponent(jTextField3))
                 .addGap(67, 67, 67)
                 .addComponent(jButton12)
-                .addContainerGap(439, Short.MAX_VALUE))
+                .addContainerGap(374, Short.MAX_VALUE))
         );
         AluminioLayout.setVerticalGroup(
             AluminioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -788,7 +790,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                 .addGroup(AluminioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton12))
-                .addContainerGap(355, Short.MAX_VALUE))
+                .addContainerGap(348, Short.MAX_VALUE))
         );
 
         Ventana.setMaximumSize(new java.awt.Dimension(700, 500));
@@ -873,7 +875,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                                 .addComponent(jTextField6))
                             .addComponent(jCheckBox3)
                             .addComponent(jCheckBox5))
-                        .addContainerGap(427, Short.MAX_VALUE))))
+                        .addContainerGap(355, Short.MAX_VALUE))))
         );
         VentanaLayout.setVerticalGroup(
             VentanaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -917,7 +919,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                 .addGroup(VentanaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CreacionVentana))
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addContainerGap(213, Short.MAX_VALUE))
         );
 
         Reja.setMaximumSize(new java.awt.Dimension(700, 500));
@@ -993,7 +995,7 @@ public class Interfaz1 extends javax.swing.JFrame {
                     .addComponent(jCheckBox6)
                     .addComponent(CreacionVentana2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jCheckBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                .addContainerGap(360, Short.MAX_VALUE))
+                .addContainerGap(290, Short.MAX_VALUE))
         );
         RejaLayout.setVerticalGroup(
             RejaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1044,14 +1046,14 @@ public class Interfaz1 extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(Principal, javax.swing.GroupLayout.DEFAULT_SIZE, 4611, Short.MAX_VALUE)
+                .addComponent(Principal, javax.swing.GroupLayout.DEFAULT_SIZE, 4612, Short.MAX_VALUE)
                 .addContainerGap(2340, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(Empleados, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 6263, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(Usuarios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 6951, Short.MAX_VALUE))
+                .addComponent(Usuarios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 6953, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -1094,13 +1096,13 @@ public class Interfaz1 extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Principal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 6416, Short.MAX_VALUE)
+            .addComponent(Principal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 6417, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(Empleados, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 5921, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(Usuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 6416, Short.MAX_VALUE))
+                .addComponent(Usuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 6417, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(CatalogoInter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1166,17 +1168,7 @@ public class Interfaz1 extends javax.swing.JFrame {
 
     private void ConsultarFranquiciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarFranquiciaActionPerformed
         Usuarios.setVisible(false);
-        Franquicias.setVisible(true);
-        Empresa lrk = new Empresa("LRK",new Persona("Jefe","Super Jefe","admin","admin"));
-        lrk.anadirFranquicia(new Franquicia("Franquicia 2","09:00","21:00","C/Piruleta",new Dueno("yo","yo mismo","yo","contrasena")));
-        lrk.anadirFranquicia(new Franquicia("Franquicia 1","09:30","21:30","C/Caramelo",new Dueno("yo","yo mismo","yo","contrasena")));
-        lrk.anadirFranquicia(new Franquicia("Franquicia 3","08:00","20:00","C/Chocolate",new Dueno("el","el mismo","el","654321")));
-        for(int j=0; j<lrk.getFranquicias().size();j++){//Escribe la lista de franquicias
-            String msg = lrk.getFranquicias().get(j).getNombre();
-        }
-        
-        
-        
+        Franquicias.setVisible(true);        
     }//GEN-LAST:event_ConsultarFranquiciaActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -1402,8 +1394,8 @@ public class Interfaz1 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTextField jTextField1;
