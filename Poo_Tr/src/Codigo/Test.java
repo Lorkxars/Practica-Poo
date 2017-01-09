@@ -589,7 +589,7 @@ public class Test {public static void main(String[] args) {
             }catch (java.util.InputMismatchException e){
                 System.out.println("Parece que no sabemos distinguir numeros de letras...");
                 sk.next();
-                estado = 8;
+                estado = 8; 
             }
     }
     
